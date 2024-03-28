@@ -1,8 +1,13 @@
+import {Card, SearchHeader, Footer} from "@/components"
 
 export default function Home() {
   return (
-    <main>
-        Arada dictionary
+    <main className="">
+        <SearchHeader />
+        <div className="w-full flex">
+
+        </div>
+        <Footer />
     </main>
   )
 }
