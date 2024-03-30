@@ -15,5 +15,14 @@ datasource db {
 
 
 model Post {
-    id Int @id @default(autoincrement())
+    id Int @id        @default(autoincrement())
+    title   String  @unique
+    definition  String 
+    example String[]
+    date DateTime @default(now())
+    postedBy String
+    spokenArea String?
+    like Int
+    dislike Int
+    tags String[]
 }

@@ -14,7 +14,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-10 text-lg text-black font-palanquin">
                     <Link href="/about"> About us </Link>
                     <Link href="/rules"> Rules </Link>
-                    <Link href="/rules"> Advertize </Link>
+                    <Link href="/advertize"> Advertize </Link>
                     <Link href="https://github.com/hariyebk/Arada-dictionary">
                         <BsGithub className="w-7 h-7 text-main mb-1" />
                     </Link>

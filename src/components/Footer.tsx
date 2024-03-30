@@ -5,8 +5,8 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
     return (
-        <section className="mt-48 pb-10 absolute inset-x-0 bottom-0">
-            <div className="h-[100px] bg-inherit py-10 px-20 border border-t-gray-600 border-opacity-35">
+        <section className="mt-48 relative inset-x-0 bottom-0 pb-16">
+            <div className="h-[100px] bg-inherit py-10 px-20 border border-t-gray-600 border-b-0 border-opacity-35">
                 <div className="py-7 flex items-center justify-between text-lg text-black font-palanquin px-20">
                     <div>
                         <p> @ 2024 &nbsp; Arada dictionary Inc. &nbsp; All rights reserved </p>
