@@ -1,7 +1,7 @@
 
 export default function About() {
     return (
-        <section className="min-h-screen">
+        <section className="min-h-screen mb-20">
             <div className="mx-72">
                 <div className="flex flex-col flex-1 items-start gap-5">
                     <p className="aboutP"> 
