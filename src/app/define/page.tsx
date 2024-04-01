@@ -33,7 +33,7 @@ export default function Define() {
                         <div className="mt-10">
                             <Label className="label"> In Which city is this word predominantly used? </Label>
                             <Select name="spokenArea">
-                                <SelectTrigger className="w-[380px] mt-8 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-6 px-3">
+                                <SelectTrigger className="w-[380px] mt-8 border border-gray-600 focus:border-none focus-visible:outline-none focus-visible:ring-white py-6 px-3">
                                     <SelectValue placeholder="Select the city" className=""/>
                                 </SelectTrigger>
                                 <SelectContent>

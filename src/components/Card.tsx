@@ -5,7 +5,7 @@ interface CardInterface {
     title: string,
     definition: string,
     example: string,
-    date: string,
+    created_at: string,
     postedBy: string,
     spokenArea: string,
     like: number,
