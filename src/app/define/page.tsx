@@ -7,9 +7,7 @@ import { redirect } from "next/navigation";
 
 export default async function Define(){
     const session = await auth()
-    console.log(session)
-    // check if the user is authorized
-    if(!session?.user?.email){
+    if(!session?.user){
         redirect("/signin")
     }
 

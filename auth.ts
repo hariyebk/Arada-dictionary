@@ -6,10 +6,10 @@ import authConfig from "./auth.config"
 export const { handlers: {GET, POST}, auth, signIn, signOut} = NextAuth({
     callbacks: {
         async session({ session, token}){
-            if(session.user && token.sub){
+            
+            if(session.user?.email && token.sub){
                 /**
-                 * Adding the ID of the user into the current session
-                 * @type {string}
+                 * Adding the id of the user to the current session.
                  */
                 session.user.id = token.sub
             }

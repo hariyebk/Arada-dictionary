@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "/public/logo.png"
-import avatar from "/public/avatar.png"
 import { BsGithub } from "react-icons/bs";
 import { auth } from "../../auth";
+import avatar from "/public/avatar.png"
 
 
 export default async function Navbar() {
@@ -25,7 +25,7 @@ export default async function Navbar() {
                     <Link href="https://github.com/hariyebk/Arada-dictionary">
                         <BsGithub className="w-7 h-7 text-main mb-1" />
                     </Link>
-                    {session?.user?.email ? <div>
+                    {session?.user ? <div>
                         <Image src={session.user.image ? session.user.image : avatar} alt="user-avatar" className="w-10 h-10 pb-1 rounded-full object-contain" />
                     </div> : 
                     <Link href="/signin" className="bg-primary px-4 py-2 rounded-md text-white text-base font-bold font-palanquin"> Sign in </Link>

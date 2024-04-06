@@ -9,7 +9,7 @@ import { z } from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Select, SelectValue, SelectContent, SelectItem, SelectLabel, SelectTrigger, Input, Textarea } from "../"
 import { cities } from "@/constants"
 import ClipLoader from "react-spinners/ClipLoader"
-import { CreatePost, getCurrentUser } from "@/actions"
+import { CreatePost} from "@/actions"
 import { useRouter } from "next/navigation"
 
 export default function WordDefinitionForm(){
@@ -30,16 +30,10 @@ export default function WordDefinitionForm(){
     async function onSubmit(values: z.infer<typeof WordDefinitionFormSchema>){
         setIsLoading(true)
         try{
-            const user = await getCurrentUser()
-
-            await CreatePost({
-                word: values.word,
-                definition: values.definition,
-                examples: values.examples.split(","),
-                spokenArea: values.spokenArea,
-                postedBy: user?.id as string,
-                posterUsername: user?.username as string
-            })
+            const result = await CreatePost(values)
+            if(result?.error){
+                return toast.error(result.error)
+            }
             toast.success("post created successfully")
             router.push("/")
         }
@@ -64,7 +58,7 @@ export default function WordDefinitionForm(){
                     <FormItem className="flex flex-col items-start gap-3">
                         <FormLabel className="label"> Word </FormLabel>
                         <FormControl>
-                            <Input type="text" placeholder="Type the word" {...field} className="w-[380px] mt-5 border border-gray-600 focus-visible:outline-none focus-visible:ring-white  py-7 px-3" />
+                            <Input type="text" disabled={isLoading} placeholder="Type the word" {...field} className="w-[380px] mt-5 border border-gray-600 focus-visible:outline-none focus-visible:ring-white  py-7 px-3" />
                         </FormControl>
                         <FormMessage className="formError" />
                     </FormItem>
@@ -78,7 +72,7 @@ export default function WordDefinitionForm(){
                     <FormItem className="flex flex-col items-start gap-3 mt-10">
                         <FormLabel className="label"> What does it mean ? </FormLabel>
                         <FormControl>
-                        <Textarea {...field} placeholder="Type the meaning of the word here" className="w-[420px] h-[100px] mt-6 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-5 px-4" />
+                        <Textarea {...field} disabled={isLoading} placeholder="Type the meaning of the word here" className="w-[420px] h-[100px] mt-6 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-5 px-4" />
                         </FormControl>
                         <FormMessage className="formError" />
                     </FormItem>
@@ -92,7 +86,7 @@ export default function WordDefinitionForm(){
                     <FormItem className="flex flex-col items-start gap-3 mt-8">
                         <FormLabel className="label"> Provide some examples for context </FormLabel>
                         <FormControl>
-                            <Textarea {...field} placeholder="use comma to separate each examples" className="w-[420px] h-[100px] mt-6 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-5 px-4" />
+                            <Textarea {...field}  placeholder="use comma to separate each examples" className="w-[420px] h-[100px] mt-6 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-5 px-4" />
                         </FormControl>
                         <FormMessage className="formError" />
                     </FormItem>

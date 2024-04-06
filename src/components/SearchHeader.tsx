@@ -1,5 +1,5 @@
 import { HiMagnifyingGlass } from "react-icons/hi2";
-import { checkIfUserHasSignedIn } from "@/actions";
+import { CheckIfAuthorized } from "@/actions";
 
 export default async function SearchHeader() {
     return (
@@ -11,8 +11,8 @@ export default async function SearchHeader() {
                         <HiMagnifyingGlass className="w-7 h-7" />
                     </button>
                 </form>
-                <form action={checkIfUserHasSignedIn} className="ml-20">
-                    <button type="submit" className="mt-2 px-5 py-4 rounded-md bg-primary text-teritiary text-base font-bold font-palanquin"> Define a word </button>
+                <form action={CheckIfAuthorized} className="ml-20">
+                    <button typeof="submit" type="submit" className="mt-2 px-5 py-4 rounded-md bg-primary text-teritiary text-base font-bold font-palanquin"> Define a word </button>
                 </form>
             </div>
         </section>
