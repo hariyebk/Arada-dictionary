@@ -1,19 +1,11 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `date` on the `Post` table. All the data in the column will be lost.
-
-*/
--- AlterTable
-ALTER TABLE "Post" DROP COLUMN "date",
-ADD COLUMN     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
-    "email" TEXT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
+    "hashedPassword" TEXT,
     "image" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -54,8 +46,27 @@ CREATE TABLE "VerificationToken" (
     "expires" TIMESTAMP(3) NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "Post" (
+    "id" SERIAL NOT NULL,
+    "word" TEXT NOT NULL,
+    "definition" TEXT NOT NULL,
+    "examples" TEXT[],
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "postedBy" TEXT NOT NULL,
+    "posterUsername" TEXT NOT NULL,
+    "spokenArea" TEXT NOT NULL,
+    "like" INTEGER,
+    "dislike" INTEGER,
+
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
@@ -68,6 +79,9 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Post_word_key" ON "Post"("word");
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -12,12 +12,12 @@ interface CardInterface {
     dislike: number
 }
 
-export default function Card() {
+export default async function Card() {
     return (
         <section className="ml-16">
-            <div className="bg-secondary mx-auto border rounded-md w-[550px] h-auto py-16 px-14">
+            <div className="bg-secondary mx-auto border rounded-md w-[550px] h-auto p-10">
                 <h4 className="text-2xl text-main font-bold uppercase"> eskrpap </h4>
-                <p className="mt-10 text-base text-black font-palanquin font-medium tracking-wide"> 
+                <p className="mt-5 text-base text-black font-palanquin font-medium tracking-wide"> 
                 When actors engage in a romance for the run of a show.
                 Once the run is over so is the romance.
                 The term originated in the theater and moved to movies and scripted television and then reality television.

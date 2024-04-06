@@ -1,5 +1,4 @@
 "use client"
-
 import { cities } from "@/constants";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
@@ -15,7 +14,7 @@ export default function Filters() {
     }
 
     return (
-        <section className="ml-3 rounded-md px-10 pt-10">
+        <section className="ml-3 rounded-md px-10 pt-5">
             <h3 className="text-lg text-main font-palanquin"> Find Words by cities </h3>
             <hr className="my-3 border border-t-gray-600 opacity-45 w-[160px]" />
             <div className="mt-7">

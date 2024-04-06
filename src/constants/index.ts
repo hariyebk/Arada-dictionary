@@ -43,5 +43,12 @@ export const rules = [
         rule: "Have Fun",
         description: "Lastly, enjoy your time on Arada Dictionary! Learning new words and connecting with others can be a lot of fun. Let's make the most of our community and have a great time together."
     }
-
 ]
+
+export enum formnames {
+    word = "word",
+    definition = "definition",
+    examples = "examples",
+    spokenArea = "spokenArea",
+    tags = "tags"
+}

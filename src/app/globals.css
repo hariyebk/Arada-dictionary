@@ -85,4 +85,7 @@
   .aboutT {
     @apply mt-7 text-2xl text-main font-palanquin font-bold
   }
+  .formError {
+    @apply mt-1.5 text-sm text-ellipsis text-red-500 font-palanquin
+  }
 }

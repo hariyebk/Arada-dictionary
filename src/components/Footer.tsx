@@ -1,9 +1,8 @@
-
 import Link from "next/link";
 import { FaYoutube, FaFacebook, FaTelegram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-export default function Footer() {
+export default async function Footer() {
     return (
         <section className="mt-48 relative inset-x-0 bottom-0 pb-16">
             <div className="h-[100px] bg-inherit py-10 px-20 border border-t-gray-600 border-b-0 border-opacity-35">

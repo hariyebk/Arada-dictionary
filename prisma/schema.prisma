@@ -15,9 +15,11 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  name          String
+  email         String   @unique
+  username      String    @unique
   emailVerified DateTime?
+  hashedPassword String?
   image         String?
   accounts      Account[]
   sessions      Session[]
@@ -58,14 +60,14 @@ model VerificationToken {
 
 model Post {
   id Int @id  @default(autoincrement())
-  title   String  @unique
+  word   String  @unique
   definition  String 
-  example String[]
+  examples String[]
   created_at DateTime @default(now())
   postedBy String
+  posterUsername String
   user  User  @relation(fields: [postedBy], references: [id], onDelete: Cascade)
-  spokenArea String?
-  like Int
-  dislike Int
-  tags String[]
+  spokenArea String
+  like Int?
+  dislike Int?
 }
