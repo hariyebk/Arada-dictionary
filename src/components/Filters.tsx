@@ -6,10 +6,8 @@ import { useState } from "react";
 export default function Filters() {
 
     const [hide, setHide] = useState(false)
-    const [clicked, setClicked] = useState(false)
 
     function handleHide(){
-        setClicked(true)
         hide ? setHide(false) : setHide(true)
     }
 
@@ -19,9 +17,6 @@ export default function Filters() {
             <hr className="my-3 border border-t-gray-600 opacity-45 w-[160px]" />
             <div className="mt-7">
                 {cities.map((city, i) => {
-                    if(i >= 5 && !hide && !clicked){
-                        setHide(true)
-                    }
                     return (
                         <div key={city} className={`${hide && i >= 5 && "hidden"} mt-2 flex items-center gap-2`}>
                             <Checkbox />

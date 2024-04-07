@@ -9,6 +9,7 @@ import { AuthenticationFormSchema, WordDefinitionFormSchema } from "@/lib/valida
 import { z } from "zod"
 import { DEFAULT_REDIRECT_ROUTE } from "../routes"
 import { redirect } from "next/navigation"
+import { generateToken } from "@/lib/token"
 
 
 export async function CheckIfAuthorized(){
@@ -105,6 +106,17 @@ export async function Login(values: z.infer<typeof AuthenticationFormSchema>){
         return {error: "Invalid inputs detected"}
     }
     const {email, password} = validatedFields.data
+    // check if the user has verified their email
+    const user = await getUserByEmail(email)
+    if(!user || !user.hashedPassword){
+        return {error: "User not found"}
+    }
+    if(user && !user.emailVerified){
+        const verificationToken = await generateToken(user.email)
+
+        return {error: "Email sent! Please verify your email address"}
+    }
+
     await signIn("credentials", {
         email,
         password,
@@ -143,7 +155,8 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
                 hashedPassword
             }
         })
-        // TODO: Sending emails
+        const verificationToken = await generateToken(email)
+        return {success: "Email sent! Please verify your email address"}
     }
     catch(error){
         if(error instanceof Error){
@@ -163,6 +176,9 @@ export async function FecthAllPosts(){
         return posts
     }
     catch(error: any){
-        throw error
+        throw new Error(error)
     }
+}
+export async function LikePost(postId: string){
+    
 }

@@ -22,16 +22,15 @@ model User {
   hashedPassword String?
   image         String?
   accounts      Account[]
-  sessions      Session[]
   Posts         Post[]
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model VerificationToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime 
+  @@unique([email, token])
 }
 
 model Account {
@@ -51,15 +50,8 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-  @@unique([identifier, token])
-}
-
 model Post {
-  id Int @id  @default(autoincrement())
+  id String @id  @default(cuid())
   word   String  @unique
   definition  String 
   examples String[]
@@ -68,6 +60,6 @@ model Post {
   posterUsername String
   user  User  @relation(fields: [postedBy], references: [id], onDelete: Cascade)
   spokenArea String
-  like Int?
-  dislike Int?
+  like String[]
+  dislike String[]
 }

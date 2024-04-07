@@ -2,9 +2,18 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import { db } from "./src/db"
 import authConfig from "./auth.config"
+import { CREDENTIALS_PROVIDER } from "@/constants";
+import { getUserById } from "@/actions";
 
 export const { handlers: {GET, POST}, auth, signIn, signOut} = NextAuth({
     callbacks: {
+        async signIn({user, account}){
+            // Allow all providers to pass without email verfication except credentials
+            if(account?.provider !== CREDENTIALS_PROVIDER) return true
+            const existingUser = await getUserById(user.id)
+            if(!existingUser?.hashedPassword || !existingUser?.emailVerified) return false
+            return true
+        },
         async session({ session, token}){
             
             if(session.user?.email && token.sub){

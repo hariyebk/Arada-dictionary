@@ -29,7 +29,7 @@ export default async function Card({post}: CardProps) {
                     <span className="text-main font-bold"> @{post.posterUsername}, </span> &nbsp;  
                     {post.created_at.toLocaleDateString('en-US', { month: "long", day: "numeric", year: "numeric"})} 
                 </p>
-                <PostButtons />
+                <PostButtons like={post.like ? post.like : 0} dislike={post.dislike ? post.dislike : 0} />
             </div>
         </section>
     )

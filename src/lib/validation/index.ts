@@ -42,4 +42,22 @@ export const WordDefinitionFormSchema = z.object({
         message: "use comma at the end of each example",
         path: ["examples"]
     }
+).refine(
+    (value) => {
+        const testarray =  value.examples.split(",")
+        return Boolean(testarray[testarray.length - 1])
+    },
+    {
+        message: "don't use comma at the end",
+        path: ["examples"]
+    }
+).refine(
+    (value) => {
+        const testarray =  value.examples.split(",")
+        return testarray.length > 1
+    },
+    {
+        message: "provide at least 2 examples",
+        path: ["examples"]
+    }
 )

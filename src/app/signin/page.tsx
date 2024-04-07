@@ -48,12 +48,18 @@ export default function Signin() {
                 if(result?.error){
                     return toast.error(result.error)
                 }
+                if(result.success){
+                    form.reset()
+                    toast.success(result.success)
+                }
             }
-            const result = await Login(values)
-            if(result?.error){
-                return toast.error(result.error)
+            else {
+                const result = await Login(values)
+                if(result?.error){
+                    return toast.error(result.error)
+                }
+                toast.success("You have Logged in")
             }
-            toast.success(isNew ? "Registration Successfull" : "You have Logged in ")
         }
         catch(error: any){
             console.log(error)

@@ -86,7 +86,7 @@ export default function WordDefinitionForm(){
                     <FormItem className="flex flex-col items-start gap-3 mt-8">
                         <FormLabel className="label"> Provide some examples for context </FormLabel>
                         <FormControl>
-                            <Textarea {...field}  placeholder="use comma to separate each examples" className="w-[420px] h-[100px] mt-6 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-5 px-4" />
+                            <Textarea {...field} disabled={isLoading}  placeholder="use comma to separate each examples" className="w-[420px] h-[100px] mt-6 border border-gray-600 focus-visible:outline-none focus-visible:ring-white py-5 px-4" />
                         </FormControl>
                         <FormMessage className="formError" />
                     </FormItem>
@@ -101,7 +101,7 @@ export default function WordDefinitionForm(){
                         <FormLabel className="label"> In Which city is this word predominantly used? </FormLabel>
                         <Select onValueChange= {field.onChange}>
                             <FormControl className="w-[380px] border border-gray-600 focus:border-none focus:outline-none focus-visible:ring-white py-6 px-3">
-                                <SelectTrigger {...field}>
+                                <SelectTrigger {...field} disabled={isLoading}>
                                     <SelectValue placeholder="Select the city" className=""/>
                                 </SelectTrigger>
                             </FormControl>

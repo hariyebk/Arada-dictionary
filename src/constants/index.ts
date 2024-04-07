@@ -52,3 +52,6 @@ export enum formnames {
     spokenArea = "spokenArea",
     tags = "tags"
 }
+export const DATABASE_CONNECTION_ERROR_MESSAGE = "PrismaClientKnownRequestError"
+
+export const CREDENTIALS_PROVIDER = "credentials"
