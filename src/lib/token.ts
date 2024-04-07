@@ -32,7 +32,7 @@ export async function generateToken(email: string){
             }
         })
 
-        return newVerificationToken
+        return newVerificationToken.token
     }
     catch(error: any){
         throw Error(error)

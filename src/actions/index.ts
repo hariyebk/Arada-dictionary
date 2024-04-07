@@ -10,6 +10,7 @@ import { z } from "zod"
 import { DEFAULT_REDIRECT_ROUTE } from "../routes"
 import { redirect } from "next/navigation"
 import { generateToken } from "@/lib/token"
+import { SendEmailVerification } from "@/lib/mail"
 
 
 export async function CheckIfAuthorized(){
@@ -113,8 +114,13 @@ export async function Login(values: z.infer<typeof AuthenticationFormSchema>){
     }
     if(user && !user.emailVerified){
         const verificationToken = await generateToken(user.email)
-
-        return {error: "Email sent! Please verify your email address"}
+        // sending emails to verify user's email
+        await SendEmailVerification({
+            email: user.email,
+            token: verificationToken,
+            name: user.name
+        })
+        return {email: "Email sent! Please verify your email address"}
     }
 
     await signIn("credentials", {
@@ -143,11 +149,11 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
          */
         const user = await getUserByEmail(email)
         if(user){
-            return {error: "This email already exists"}
+            return {error: "User with this email already exists"}
         }
         const bcrypt = require("bcrypt");
         const hashedPassword = await bcrypt.hash(password, 12)
-        await db.user.create({
+        const newuser = await db.user.create({
             data: {
                 name: `${firstname} ${lastname}`,
                 username: username.includes("@") ? username.replace("@", "") : username,
@@ -156,7 +162,12 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
             }
         })
         const verificationToken = await generateToken(email)
-        return {success: "Email sent! Please verify your email address"}
+        // sending emails to verify user's email
+        await SendEmailVerification({
+            email: newuser.email,
+            token: verificationToken,
+            name: newuser.name
+        })
     }
     catch(error){
         if(error instanceof Error){
@@ -165,10 +176,8 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
         return {error: "Database connection failed because it's free plan"}
     }
 
-    revalidatePath("/")
+    return {success: "Email sent! Please verify your email address"}
 
-    redirect(DEFAULT_REDIRECT_ROUTE)
-    
 }
 export async function FecthAllPosts(){
     try{
