@@ -11,7 +11,7 @@ import { redirect } from "next/navigation"
 import { generateToken } from "@/lib/token"
 import { SendEmailVerification } from "@/lib/mail"
 import { getVerficationTokenByToken } from "@/db/verification-token"
-import { CREDENTIALS_PROVIDER } from "@/constants"
+import { CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE } from "@/constants"
 import { AuthError } from "next-auth"
 
 
@@ -38,8 +38,8 @@ export async function getCurrentUser(){
         if(!user) return null
         return user
     }
-    catch(error){
-        return null
+    catch(error: any){
+        throw Error(error)
     }
 }
 export async function CreatePost(values: z.infer<typeof WordDefinitionFormSchema>){
@@ -109,13 +109,14 @@ export async function Login(values: z.infer<typeof AuthenticationFormSchema>){
         return {error: "Invalid inputs detected"}
     }
     const {email, password} = validatedFields.data
+    const isMyMail = email === process.env.MY_EMAIL
     try{
         // check if the user has verified their email
         const user = await getUserByEmail(email)
         if(!user || !user.hashedPassword){
             return {error: "User not found"}
         }
-        if(user && !user.emailVerified){
+        if(isMyMail && user && !user.emailVerified){
             const verificationToken = await generateToken(user.email)
             // sending emails to verify user's email
             await SendEmailVerification({
@@ -154,6 +155,7 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
     if(!firstname || !lastname || !username || !confirmPassword){
         return {error: "Missing fields"}
     }
+    const isMyMail = email === process.env.MY_EMAIL
     try{
         /**
          * Check if the email already exists before creating the user
@@ -172,13 +174,15 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
                 hashedPassword
             }
         })
-        const verificationToken = await generateToken(email)
-        // sending emails to verify user's email
-        await SendEmailVerification({
-            email: newuser.email,
-            token: verificationToken,
-            name: newuser.name
-        })
+        if(isMyMail){
+            const verificationToken = await generateToken(email)
+            // sending emails to verify user's email
+            await SendEmailVerification({
+                email: newuser.email,
+                token: verificationToken,
+                name: newuser.name
+            })
+        }
     }
     catch(error){
         if(error instanceof Error){
@@ -187,8 +191,16 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
         return {error: "Database connection failed because it's free plan"}
     }
 
-    return {success: "Email sent! Please verify your email address"}
-
+    if(isMyMail){
+        return {success: "Email sent! Please verify your email address"}
+    }
+    else{
+        await signIn(CREDENTIALS_PROVIDER, {
+            email,
+            password,
+            redirectTo: DEFAULT_REDIRECT_ROUTE
+        })
+    }
 }
 export async function FecthAllPosts(){
     try{
@@ -235,5 +247,48 @@ export async function CheckEmailVerification(token: string){
 
 }
 export async function LikePost(postId: string){
-    
+    try{
+        // first find the post
+        const post = await db.post.findFirst({
+            where: {
+                id: postId
+            }
+        })
+        if(!post){
+            return {error: "post not found"}
+        }
+        // find the current user
+        const currentUser = await getCurrentUser()
+        if(!currentUser){
+            return {error: "please login to perform this action"}
+        }
+        const postlikes = post.like
+        let tempArray
+        const userAlreadyLiked = postlikes.includes(currentUser.id)
+        if(userAlreadyLiked){
+            tempArray = postlikes.filter((userId) => userId !== currentUser.id)
+        }
+        else{
+            tempArray = [...postlikes, currentUser.id]
+        }
+        // update the likes of the post
+        await db.post.update({
+            where: {
+                id: postId
+            },
+            data: {
+                like: tempArray
+            }
+        })
+
+        revalidatePath("/")
+
+        return {sucess: `${userAlreadyLiked ? "post has been unliked" : "post has been liked"}`}
+    }
+    catch(error: any){
+        if(error instanceof Error){
+            return {error: error.message}
+        }
+        return {error: "Something went wrong"}
+    }
 }

@@ -11,8 +11,11 @@ export const { handlers: {GET, POST}, auth, signIn, signOut} = NextAuth({
         async signIn({user, account}){
             // Allow all providers to pass without email verfication except credentials
             if(account?.provider !== CREDENTIALS_PROVIDER) return true
+            const isMyMail = user.email === process.env.MY_EMAIL
             const existingUser = await getUserById(user.id!)
-            if(!existingUser?.hashedPassword || !existingUser?.emailVerified) return false
+            if(isMyMail){
+                if(!existingUser?.hashedPassword || !existingUser?.emailVerified) return false
+            }
             return true
         },
         async session({ session, token}){

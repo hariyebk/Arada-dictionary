@@ -23,6 +23,7 @@ const config = {
         secondary: "#bcb8b1",
         teritiary: "#faf4f3",
         main: "#264653",
+        latin: "#3f3f3f",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

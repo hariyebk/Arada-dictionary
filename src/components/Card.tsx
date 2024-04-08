@@ -24,12 +24,12 @@ export default async function Card({post}: CardProps) {
                         )
                     })}
                 </div>
-                <p className={`mt-5 text-base text-black tracking-wide font-medium ${AMAHRIC_FONT.className}`}>
+                <p className={`mt-7 text-base text-black tracking-wide font-medium ${AMAHRIC_FONT.className}`}>
                     by
                     <span className="text-main font-bold"> @{post.posterUsername}, </span> &nbsp;  
                     {post.created_at.toLocaleDateString('en-US', { month: "long", day: "numeric", year: "numeric"})} 
                 </p>
-                <PostButtons like={post.like.length} dislike={post.dislike.length} />
+                <PostButtons likeCount={post.like.length} dislikeCount={post.dislike.length} post={post} />
             </div>
         </section>
     )

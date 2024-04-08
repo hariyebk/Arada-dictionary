@@ -11,6 +11,7 @@ import { cities } from "@/constants"
 import ClipLoader from "react-spinners/ClipLoader"
 import { CreatePost} from "@/actions"
 import { useRouter } from "next/navigation"
+import { AMAHRIC_FONT } from "@/utils/font"
 
 export default function WordDefinitionForm(){
 
@@ -49,7 +50,7 @@ export default function WordDefinitionForm(){
     return (
         <section>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={`${AMAHRIC_FONT.className}`}>
                     {/* WORD */}
                     <FormField
                     control={form.control}

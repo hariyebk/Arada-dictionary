@@ -55,3 +55,8 @@ export enum formnames {
 export const DATABASE_CONNECTION_ERROR_MESSAGE = ["PrismaClientKnownRequestError", "PrismaClientInitializationError"]
 
 export const CREDENTIALS_PROVIDER = "credentials"
+
+export enum LIKE_DISLIKE {
+    like = "like",
+    dislike = "dislike"
+}

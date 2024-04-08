@@ -80,7 +80,7 @@
     @apply text-xl text-black font-palanquin
   }
   .aboutP {
-    @apply text-lg text-black text-justify font-palanquin leading-7
+    @apply text-lg text-black text-justify font-palanquin leading-8
   }
   .aboutT {
     @apply mt-7 text-2xl text-main font-palanquin font-bold

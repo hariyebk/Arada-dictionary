@@ -48,7 +48,7 @@ export const WordDefinitionFormSchema = z.object({
         return Boolean(testarray[testarray.length - 1])
     },
     {
-        message: "don't use comma at the end",
+        message: "provide at least two examples. and don't use comma on the last one",
         path: ["examples"]
     }
 ).refine(

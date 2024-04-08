@@ -11,8 +11,8 @@ export default async function Home() {
             <div className="flex flex-1 flex-col items-center">
                 {posts.map((post, i) => {
                   return (
-                    <div className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
-                      <Card key={post.id} post={post} />
+                    <div key={post.id} className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
+                      <Card post={post} />
                     </div>
                   )
                 })

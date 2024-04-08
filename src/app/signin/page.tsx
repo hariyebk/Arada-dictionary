@@ -50,8 +50,8 @@ export default function Signin() {
                 if(result?.error){
                     return toast.error(result.error)
                 }
-                if(result.success){
-                    setEmailMessage(result.success)
+                if(result?.success){
+                    setEmailMessage(result?.success)
                 }
             }
             else {
@@ -89,7 +89,7 @@ export default function Signin() {
             <div className="flex items-center justify-center container">
                 <div className="flex flex-col flex-1 items-center">
                     <h3 className="text-2xl text-black font-palanquin uppercase"> {isNew ? "Create your Account" : "Sign in to your Account"} </h3>
-                    <div className="mt-5 w-[500px] h-auto bg-white shadow-xl rounded-md pt-16 pb-20 pl-20">
+                    <div className="mt-10 w-[500px] h-auto bg-white shadow-xl rounded-md pt-16 pb-20 pl-20">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-3">
                                 {isNew && <div>
@@ -101,7 +101,7 @@ export default function Signin() {
                                 <FormItem className="flex flex-col items-start gap-3">
                                     <FormLabel> First Name </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} placeholder="abebe" className="w-[350px] text-stone-500 py-5 rounded-md border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} placeholder="abebe" className="w-[350px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -115,7 +115,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3">
                                     <FormLabel> Last Name </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} placeholder="balcha" className="w-[350px] text-stone-500 py-3 rounded-md border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} placeholder="balcha" className="w-[350px] text-stone-500 py-3 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -129,7 +129,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3">
                                     <FormLabel> Username </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} className="w-[350px] text-stone-500 py-5 rounded-md border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} className="w-[350px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -145,7 +145,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3">
                                     <FormLabel> Email address </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} placeholder="mamo@example.com" className="w-[350px] text-stone-500 py-5 rounded-md border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} placeholder="mamo@example.com" className="w-[350px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -160,7 +160,7 @@ export default function Signin() {
                                     <FormLabel> Password </FormLabel>
                                     <FormControl>
                                         <div className="flex items-center justify-between w-[350px] rounded-md border border-gray-400 pr-5 py-1 pl-3">
-                                            <Input type={`${showPassword ? "text" : "password"}`} disabled={isLoading} {...field} placeholder="*********" className="focus:outline-none focus-visible:ring-white border-none" />
+                                            <Input type={`${showPassword ? "text" : "password"}`} disabled={isLoading} {...field} placeholder="*********" className="bg-white focus:outline-none focus-visible:ring-white border-none" />
                                             {showPassword ? <button type="button" onClick={() => setShowPassword(false)}> 
                                                 <GoEye className="w-4 h-4" />
                                             </button> : <button type="button" onClick={() => setShowPassword(true)}> 
@@ -181,7 +181,7 @@ export default function Signin() {
                                     <FormLabel> Confirm Password </FormLabel>
                                     <FormControl>
                                         <div className="flex items-center justify-between w-[350px] rounded-md border border-gray-400 pr-5 py-1 pl-3">
-                                            <Input type={`${showConfirmPassword ? "text" : "password"}`} disabled={isLoading} {...field} placeholder="**********" className="focus:outline-none focus-visible:ring-white border-none" />
+                                            <Input type={`${showConfirmPassword ? "text" : "password"}`} disabled={isLoading} {...field} placeholder="**********" className="bg-white focus:outline-none focus-visible:ring-white border-none" />
                                             { showConfirmPassword ?  <button type="button" onClick={() => setShowConfirmPassword(false)}> 
                                                 <GoEye className="w-4 h-4" /> 
                                             </button>:  <button type="button" onClick={() => setShowConfirmPassword(true)}> 
