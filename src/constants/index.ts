@@ -55,10 +55,3 @@ export enum formnames {
 export const DATABASE_CONNECTION_ERROR_MESSAGE = ["PrismaClientKnownRequestError", "PrismaClientInitializationError"]
 
 export const CREDENTIALS_PROVIDER = "credentials"
-
-export enum FORM_FIELDS {
-    firstname = "firstname",
-    lastname = "lastname",
-    username = "username",
-    confirmPassword = "confirmPassword"
-}

@@ -4,13 +4,15 @@ import { db } from "@/db"
 import { revalidatePath } from "next/cache"
 import { auth } from "../../auth"
 import { signIn } from "../../auth"
-// import {AuthError} from "next-auth"
 import { AuthenticationFormSchema, WordDefinitionFormSchema } from "@/lib/validation"
 import { z } from "zod"
 import { DEFAULT_REDIRECT_ROUTE } from "../routes"
 import { redirect } from "next/navigation"
 import { generateToken } from "@/lib/token"
 import { SendEmailVerification } from "@/lib/mail"
+import { getVerficationTokenByToken } from "@/db/verification-token"
+import { CREDENTIALS_PROVIDER } from "@/constants"
+import { AuthError } from "next-auth"
 
 
 export async function CheckIfAuthorized(){
@@ -107,28 +109,37 @@ export async function Login(values: z.infer<typeof AuthenticationFormSchema>){
         return {error: "Invalid inputs detected"}
     }
     const {email, password} = validatedFields.data
-    // check if the user has verified their email
-    const user = await getUserByEmail(email)
-    if(!user || !user.hashedPassword){
-        return {error: "User not found"}
-    }
-    if(user && !user.emailVerified){
-        const verificationToken = await generateToken(user.email)
-        // sending emails to verify user's email
-        await SendEmailVerification({
-            email: user.email,
-            token: verificationToken,
-            name: user.name
-        })
-        return {email: "Email sent! Please verify your email address"}
-    }
+    try{
+        // check if the user has verified their email
+        const user = await getUserByEmail(email)
+        if(!user || !user.hashedPassword){
+            return {error: "User not found"}
+        }
+        if(user && !user.emailVerified){
+            const verificationToken = await generateToken(user.email)
+            // sending emails to verify user's email
+            await SendEmailVerification({
+                email: user.email,
+                token: verificationToken,
+                name: user.name
+            })
+            return {email: "Email sent! Please verify your email address"}
+        }
 
-    await signIn("credentials", {
-        email,
-        password,
-        redirectTo: DEFAULT_REDIRECT_ROUTE
-    })
-    revalidatePath("/")
+        await signIn(CREDENTIALS_PROVIDER, {
+            email,
+            password,
+            redirectTo: DEFAULT_REDIRECT_ROUTE
+        })
+    }
+    catch(error: any){
+        if(error instanceof AuthError){
+            if(error.type === "CredentialsSignin"){
+                return {error: "Invalid Credentials"}
+            }
+        }
+        throw error
+    }
 }
 export async function SocialLogin(action: string){
     await signIn(action, {redirectTo: DEFAULT_REDIRECT_ROUTE})
@@ -187,6 +198,41 @@ export async function FecthAllPosts(){
     catch(error: any){
         throw new Error(error)
     }
+}
+export async function CheckEmailVerification(token: string){
+    const verificationToken = await getVerficationTokenByToken(token)
+    if(!verificationToken){
+        return {error: "Invalid token. please try logging in again"}
+    }
+    // check if the token has expired 
+    const isTokenExpired = new Date(verificationToken.expires) < new Date()
+    if(isTokenExpired){
+        return {error: "Your token has expired. please try logging in again"}
+    }
+    try{
+        // update the emailVerified property of the user to the current date and delete the verification token
+        await db.user.update({
+            where: {
+                email: verificationToken.email
+            },
+            data: {
+                emailVerified: new Date()
+            }
+        })
+        await  db.verificationToken.delete({
+            where: {
+                id: verificationToken.id
+            }
+        })
+    }
+    catch(error: any){
+        throw Error(error)
+    }
+    
+    revalidatePath("/")
+
+    redirect("/signin")
+
 }
 export async function LikePost(postId: string){
     

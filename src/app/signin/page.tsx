@@ -14,7 +14,6 @@ import { AuthenticationFormSchema } from "@/lib/validation";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Login, Register, SocialLogin } from "@/actions";
-import { FORM_FIELDS } from "@/constants";
 
 export default function Signin() {
     const [showPassword, setShowPassword] = useState(false)
@@ -52,11 +51,6 @@ export default function Signin() {
                     return toast.error(result.error)
                 }
                 if(result.success){
-                    form.resetField(FORM_FIELDS.firstname)
-                    form.resetField(FORM_FIELDS.lastname)
-                    form.resetField(FORM_FIELDS.username)
-                    form.resetField(FORM_FIELDS.confirmPassword)
-
                     setEmailMessage(result.success)
                 }
             }

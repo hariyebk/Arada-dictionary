@@ -26,7 +26,7 @@ export default async function Navbar() {
                         <BsGithub className="w-7 h-7 text-main mb-1" />
                     </Link>
                     {session?.user ? <div>
-                        <Image src={session.user.image ? session.user.image : avatar} alt="user-avatar" className="w-10 h-10 pb-1 rounded-full object-contain" />
+                        <Image src={session.user.image ? session.user.image : avatar} alt="user-avatar"  width={35} height={35} className="mb-1 rounded-full object-contain" />
                     </div> : 
                     <Link href="/signin" className="bg-primary px-4 py-2 rounded-md text-white text-base font-bold font-palanquin"> Sign in </Link>
                     }

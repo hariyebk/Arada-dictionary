@@ -7,7 +7,7 @@ interface SendEmailVerificationProps {
 }
 const resend = new Resend(process.env.RESEND_API_KEY)
 export async function SendEmailVerification({email, token, name}: SendEmailVerificationProps){
-    const confirmationLink = `http://localhost:3000/auth/new-verification?token=${token}`
+    const confirmationLink = `http://localhost:3000/verification?token=${token}`
     const {data, error} = await resend.emails.send({
         from: "onboarding@resend.dev",
         to: email,

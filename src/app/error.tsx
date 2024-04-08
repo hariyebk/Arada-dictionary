@@ -8,11 +8,11 @@ interface ErrorProps {
 }
 
 export default function error({error}: ErrorProps){
-    console.log(error)
+    const isDatabaseError = DATABASE_CONNECTION_ERROR_MESSAGE.find((message) =>  error.message.startsWith(message))
     return (
         <section className="min-h-screen">
             <div className="flex flex-1 items-center justify-center bg-background">
-                <p className="text-lg text-black font-palanquin"> {DATABASE_CONNECTION_ERROR_MESSAGE.includes(error.message) ? "Database connection has failed. since it's a hobby plan" : "Something went wrong 😣"} </p>
+                <p className="text-lg text-black font-palanquin"> {isDatabaseError ? "Database connection lost, since it's a hobby plan" : "Something went wrong"} </p>
             </div>
         </section>
     )

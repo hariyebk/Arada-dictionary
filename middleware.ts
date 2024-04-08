@@ -1,9 +1,10 @@
 import authConfig from "./auth.config"
 import NextAuth from "next-auth"
 import {publicRoutes, apiAuthRoute, authRoutes, DEFAULT_REDIRECT_ROUTE, UNAUTHORIZED_REDIRECT_ROUTE} from "@/routes"
-export const { auth } = NextAuth(authConfig)
+import { NextResponse } from "next/server"
+export const {auth: middleware} = NextAuth(authConfig)
 
-export default auth((req) => {
+export default middleware((req) => {
     const {nextUrl} = req
     const isLoggedIn = Boolean(req.auth)
     console.log(isLoggedIn)
@@ -14,7 +15,7 @@ export default auth((req) => {
     /**
      * return null means , dont do nothing just allow it to pass.
      */
-    if(isApiAuthRoute) return
+    if(isApiAuthRoute) return NextResponse.next()
     if(isAuthRoute){
         /** 
          * Authenticated users are not permitted to visit auth routes
@@ -22,7 +23,7 @@ export default auth((req) => {
         if(isLoggedIn){
             return  Response.redirect(new URL(DEFAULT_REDIRECT_ROUTE, nextUrl))
         }
-        return
+        return NextResponse.next()
     }
     if(!isLoggedIn && !isPublicRoute){
         /**
@@ -30,7 +31,7 @@ export default auth((req) => {
          */
         return Response.redirect(new URL(UNAUTHORIZED_REDIRECT_ROUTE, nextUrl))
     }
-    return
+    return NextResponse.next()
 })
 
 // Optionally, don't invoke Middleware on some paths
