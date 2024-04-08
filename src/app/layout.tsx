@@ -5,7 +5,6 @@ import { Footer } from "@/components";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/context/Auth";
 
-
 export const metadata: Metadata = {
   title: "Arada dictionary",
   description: "A crowdsourced dictionary that focuses on slang and informal language",

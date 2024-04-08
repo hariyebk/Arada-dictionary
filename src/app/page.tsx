@@ -9,9 +9,11 @@ export default async function Home() {
         <div className="w-full mb-28 mt-16 px-10 flex items-start">
             <Filters />
             <div className="flex flex-1 flex-col items-center">
-                {posts.map((post) => {
+                {posts.map((post, i) => {
                   return (
-                    <Card key={post.id} post={post} />
+                    <div className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
+                      <Card key={post.id} post={post} />
+                    </div>
                   )
                 })
                 }

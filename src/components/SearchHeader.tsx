@@ -12,7 +12,7 @@ export default async function SearchHeader() {
                     </button>
                 </form>
                 <form action={CheckIfAuthorized} className="ml-20">
-                    <button typeof="submit" type="submit" className="mt-2 px-5 py-4 rounded-md bg-primary text-teritiary text-base font-bold font-palanquin"> Define a word </button>
+                    <button typeof="submit" type="submit" className="mt-2 px-5 py-4 rounded-md bg-primary text-white text-base font-bold font-palanquin"> Define a word </button>
                 </form>
             </div>
         </section>

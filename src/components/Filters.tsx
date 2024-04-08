@@ -2,6 +2,8 @@
 import { cities } from "@/constants";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
+import {AMAHRIC_FONT} from "@/utils/font"
+
 
 export default function Filters() {
 
