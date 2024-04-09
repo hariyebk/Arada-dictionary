@@ -11,7 +11,7 @@ import { redirect } from "next/navigation"
 import { generateToken } from "@/lib/token"
 import { SendEmailVerification } from "@/lib/mail"
 import { getVerficationTokenByToken } from "@/db/verification-token"
-import { CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE } from "@/constants"
+import { CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE, LIKE_DISLIKE } from "@/constants"
 import { AuthError } from "next-auth"
 
 
@@ -204,7 +204,11 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
 }
 export async function FecthAllPosts(){
     try{
-        const posts = await db.post.findMany()
+        const posts = await db.post.findMany({
+            orderBy: {
+                created_at: "desc"
+            }
+        })
         return posts
     }
     catch(error: any){
@@ -246,49 +250,230 @@ export async function CheckEmailVerification(token: string){
     redirect("/signin")
 
 }
-export async function LikePost(postId: string){
+// export async function LikePost(postId: string){
+//     try{
+//         // first find the post
+//         const post = await db.post.findFirst({
+//             where: {
+//                 id: postId
+//             }
+//         })
+//         if(!post){
+//             return {error: "post not found"}
+//         }
+//         // find the current user
+//         const currentUser = await getCurrentUser()
+//         if(!currentUser){
+//             return {error: "please login to perform this action"}
+//         }
+//         // Check If the user Already liked the post
+//         const userAlreadyLiked = post.like.includes(currentUser.id)
+//         let tempArray
+//         if(userAlreadyLiked){
+//             tempArray = post.like.filter((userId) => userId !== currentUser.id)
+//         }
+//         else{
+//             // Add the current user's Id to the like array of the post
+//             tempArray = [...post.like, currentUser.id]
+//         }
+//         // update the post
+//         await db.post.update({
+//             where: {
+//                 id: postId
+//             },
+//             data: {
+//                 like: tempArray
+//             }
+//         })
+//         // Check If the user disliked the post. because one user can not like and disliked the same at the same time
+//         const userDislikedThePost = post.dislike.includes(currentUser.id)
+//         if(userDislikedThePost){
+//             // remove the user from the dislike array
+//             const tempArray = post.dislike.filter((userId) => userId !== currentUser.id)
+//             // update the post
+//             await db.post.update({
+//                 where: {
+//                     id:  postId
+//                 },
+//                 data: {
+//                     dislike: tempArray
+//                 }
+//             })
+//         }
+
+//         revalidatePath("/")
+
+//         return {sucess: `${userAlreadyLiked ? "post has been unliked" : "post has been liked"}`}
+//     }
+//     catch(error: any){
+//         if(error instanceof Error){
+//             return {error: error.message}
+//         }
+//         return {error: "Something went wrong"}
+//     }
+// }
+
+// export async function Dislike(postId: string) {
+//     try{
+//         // Find the post
+//         const post = await db.post.findFirst({
+//             where: {
+//                 id: postId
+//             }
+//         })
+//         if(!post) {
+//             return {error: "Post not found"}
+//         }
+//         // Get the current user
+//         const currentUser = await getCurrentUser()
+//         if(!currentUser){
+//             return {error: "Please login to perform this action"}
+//         }
+//         // Check If the user Already disliked the post
+//         const userAlreadyDisliked = post.dislike.includes(currentUser.id)
+//         let tempArray
+//         if(userAlreadyDisliked){
+//             // remove the user from the Dislike array
+//             tempArray = post.dislike.filter((userId) => userId !== currentUser.id)
+//         }
+//         else {
+//             // Add the user's id to the Dislike array
+//             tempArray = [...post.dislike, currentUser.id]
+//         }
+//         // update the post
+//         await db.post.update({
+//             where: {
+//                 id: postId
+//             },
+//             data: {
+//                 dislike: tempArray
+//             }
+//         })
+//         // Check if The user has liked the post. because one user can not like and dislike the same post at the same time. 
+//         const userLikedThePost = post.like.includes(currentUser.id)
+//         if(userLikedThePost){
+//             // remove the user's id from the like array
+//             const tempArray = post.like.filter((userId) => userId !== currentUser.id)
+//             // update the like array of the post
+//             await db.post.update({
+//                 where: {
+//                     id: postId
+//                 },
+//                 data: {
+//                     like: tempArray
+//                 }
+//             })
+//         }
+
+//         revalidatePath("/")
+
+//         return {success: `${userAlreadyDisliked ? "post has been unDiisliked" : "post has been Disliked"}`}
+
+//     }
+//     catch(error){
+//         if(error instanceof Error){
+//             return {error: error.message}
+//         }
+//         return {error: "Something went wrong"}
+//     }
+// }
+
+// RE-USABLE CODE
+export async function LikeDislike({type, postId}: {type: string, postId: string}) {
     try{
-        // first find the post
+        // Find the post
         const post = await db.post.findFirst({
             where: {
                 id: postId
             }
         })
-        if(!post){
-            return {error: "post not found"}
+        if(!post) {
+            return {error: "Post not found"}
         }
-        // find the current user
+        // Get the current user
         const currentUser = await getCurrentUser()
         if(!currentUser){
-            return {error: "please login to perform this action"}
+            return {error: "Please login to perform this action"}
         }
-        const postlikes = post.like
-        let tempArray
-        const userAlreadyLiked = postlikes.includes(currentUser.id)
-        if(userAlreadyLiked){
-            tempArray = postlikes.filter((userId) => userId !== currentUser.id)
+        if(type === LIKE_DISLIKE.like){
+            // Check If the user Already liked the post
+            const userAlreadyLiked = post.like.includes(currentUser.id)
+            let tempArray
+            if(userAlreadyLiked){
+                tempArray = post.like.filter((userId) => userId !== currentUser.id)
+            }
+            else{
+                // Add the current user's Id to the like array of the post
+                tempArray = [...post.like, currentUser.id]
+            }
+            // update the post
+            await db.post.update({
+                where: {
+                    id: postId
+                },
+                data: {
+                    like: tempArray
+                },
+            })
+            // Check If the user disliked the post. because one user can not like and disliked the same at the same time
+            const userDislikedThePost = post.dislike.includes(currentUser.id)
+            if(userDislikedThePost){
+                // remove the user from the dislike array
+                const tempArray = post.dislike.filter((userId) => userId !== currentUser.id)
+                // update the post
+                await db.post.update({
+                    where: {
+                        id:  postId
+                    },
+                    data: {
+                        dislike: tempArray
+                    }
+                })
+            }
         }
         else{
-            tempArray = [...postlikes, currentUser.id]
-        }
-        // update the likes of the post
-        await db.post.update({
-            where: {
-                id: postId
-            },
-            data: {
-                like: tempArray
+            // Check If the user Already disliked the post
+            const userAlreadyDisliked = post.dislike.includes(currentUser.id)
+            let tempArray
+            if(userAlreadyDisliked){
+                // remove the user from the Dislike array
+                tempArray = post.dislike.filter((userId) => userId !== currentUser.id)
             }
-        })
+            else {
+                // Add the user's id to the Dislike array
+                tempArray = [...post.dislike, currentUser.id]
+            }
+            // update the post
+            await db.post.update({
+                where: {
+                    id: postId
+                },
+                data: {
+                    dislike: tempArray
+                }
+            })
+            // Check if The user has liked the post. because one user can not like and dislike the same post at the same time. 
+            const userLikedThePost = post.like.includes(currentUser.id)
+            if(userLikedThePost){
+                // remove the user's id from the like array
+                const tempArray = post.like.filter((userId) => userId !== currentUser.id)
+                // update the like array of the post
+                await db.post.update({
+                    where: {
+                        id: postId
+                    },
+                    data: {
+                        like: tempArray
+                    }
+                })
+            }
+        }
 
         revalidatePath("/")
 
-        return {sucess: `${userAlreadyLiked ? "post has been unliked" : "post has been liked"}`}
+        return {success: "Done"}
     }
     catch(error: any){
-        if(error instanceof Error){
-            return {error: error.message}
-        }
-        return {error: "Something went wrong"}
+        return {error: "Database connection failed."}
     }
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { LikePost } from "@/actions";
+import { LikeDislike } from "@/actions";
 import { LIKE_DISLIKE } from "@/constants";
 import { Post } from "@prisma/client";
 import { useSession } from "next-auth/react";
@@ -12,14 +12,11 @@ import { IoFlagOutline } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
 
 interface PostButtonsProps {
-    likeCount: number,
-    dislikeCount: number,
     post: Post
-
 }
-export default function PostButtons({likeCount, dislikeCount, post}: PostButtonsProps) {
-    console.log(likeCount)
+export default function PostButtons({post}: PostButtonsProps) {
     const [isLoading, setIsLoading] = useState(false)
+    const [type, setType] = useState("")
     const session = useSession()
     const router = useRouter()
 
@@ -27,47 +24,56 @@ export default function PostButtons({likeCount, dislikeCount, post}: PostButtons
         if(!session.data){
             return router.push("/signin")
         }   
-        if(type === LIKE_DISLIKE.like){
-            console.log(session.data?.user?.id)
-            setIsLoading(true)
-            LikePost(post.id).then((message) => {
-                if(message.error){
-                    console.log(message.error)
-                    return toast.error(message.error)
-                }
-            }).finally(() => {
-                setIsLoading(false)
-            })
-        }
-        else{
-            // TODO: Add the current user's id to list list
-        }
+        setIsLoading(true)
+        setType(type)
+        LikeDislike({type, postId: post.id}).then((data) => {
+            if(data.error){
+                return toast.error(data.error)
+            }
+        }).finally(() => {
+            setIsLoading(false)
+        })
     }
     
     return (
         <div className="w-full mt-10 flex items-center justify-between">
             <div className="flex items-center">
-                <button onClick={() => handleclick(LIKE_DISLIKE.like)} className={`${likeCount !== 0 ? "bg-primary text-white" : "hover:bg-primary hover:text-white"} flex items-center gap-2 border border-r-0 border-gray-800 px-5 py-2 rounded-l-full hover:border-0.5 hover:border-r-0`}>
-                    {isLoading ? (
+                <button onClick={() => handleclick(LIKE_DISLIKE.like)} disabled={isLoading} className={`${ session.data?.user ? post.like.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"} w-20 flex items-center gap-2 border border-r-0 border-gray-800 disabled:cursor-not-allowed px-5 py-2 rounded-l-full hover:border-0.5 hover:border-r-0 focus-visible:outline-none`}>
+                    {isLoading && type === LIKE_DISLIKE.like ? (
                         <div>
                             <ClipLoader
-                                color="#000000"
+                                color="#ffffff"
                                 loading={true}
                                 size={14}
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
+                                className="flex items-center justify-center ml-3"
                             />
-
                         </div>
                     ) :
                     <div className="flex items-center gap-2">
                         <AiOutlineLike className="w-5 h-5" />
-                        <span> {likeCount} </span>
-                    </div>}
+                        <span> {post.like.length} </span>
+                    </div>
+                    }
                 </button>
-                <button onClick={() => handleclick(LIKE_DISLIKE.dislike)} className="flex items-center gap-2 border border-l-0.5 border-gray-800 px-5 py-2 rounded-r-full hover:bg-primary hover:text-white hover:border-0.5">
-                    <AiOutlineDislike className="w-5 h-5" />
-                    <span> {dislikeCount} </span>
+                <button onClick={() => handleclick(LIKE_DISLIKE.dislike)} disabled={isLoading} className={`${session.data?.user ? post.dislike.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"} w-20 flex items-center gap-2 border border-l-0.5 border-gray-800 px-5 py-2 rounded-r-full disabled:cursor-not-allowed hover:border-0.5 focus-visible:outline-none`}>
+                    {isLoading && type === LIKE_DISLIKE.dislike ? (
+                        <div>
+                            <ClipLoader
+                                color="#ffffff"
+                                loading={true}
+                                size={14}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                                className="flex items-center justify-center ml-3"
+                            />
+                        </div>
+                    ): <div className="flex items-center gap-2">
+                        <AiOutlineDislike className="w-5 h-5" />
+                        <span> {post.dislike.length} </span>
+                    </div>
+                    }
                 </button>
             </div>
             <div>

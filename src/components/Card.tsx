@@ -6,6 +6,7 @@ interface CardProps {
 }
 
 export default async function Card({post}: CardProps) {
+
     return (
         <section className="ml-16">
             <div className="bg-secondary mx-auto border rounded-md w-[550px] h-auto p-10">
@@ -29,7 +30,7 @@ export default async function Card({post}: CardProps) {
                     <span className="text-main font-bold"> @{post.posterUsername}, </span> &nbsp;  
                     {post.created_at.toLocaleDateString('en-US', { month: "long", day: "numeric", year: "numeric"})} 
                 </p>
-                <PostButtons likeCount={post.like.length} dislikeCount={post.dislike.length} post={post} />
+                <PostButtons post={post} />
             </div>
         </section>
     )
