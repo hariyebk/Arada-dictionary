@@ -14,7 +14,7 @@ export default async function Home({searchParams}: {searchParams?: {city?: strin
   return (
     <main className="min-h-screen">
         <SearchHeader />
-        <div className="w-full mb-28 mt-16 px-10 flex items-start">
+        <div className="w-full mb-28 mt-16 max-md:mt-10 px-10 flex items-start">
             <Filters />
             <div className="flex flex-1 flex-col items-center">
                 {queriedPosts.length === 0 ?

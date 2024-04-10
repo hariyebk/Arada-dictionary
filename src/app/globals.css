@@ -83,7 +83,7 @@
     @apply text-lg text-black text-justify font-palanquin leading-8
   }
   .aboutT {
-    @apply mt-7 text-2xl text-main font-palanquin font-bold
+    @apply mt-7 text-2xl max-md:text-xl text-main font-palanquin font-bold
   }
   .formError {
     @apply mt-1.5 text-sm text-ellipsis text-red-500 font-palanquin

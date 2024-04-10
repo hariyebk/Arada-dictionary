@@ -70,3 +70,24 @@ export enum QUERY_PARAMS {
     city = "city",
     search = "search"
 }
+
+export const MobileNav = [
+    {
+        href: "/",
+        label: "Home"
+    },
+    {
+        href: "/about",
+        label: "About"
+    },
+    {
+        href: "/rules",
+        label: "Rules"
+    },
+    {
+        href: "/define",
+        label: "Define"
+    }
+]
+
+export const PROTECTED_ROUTE = "/define"

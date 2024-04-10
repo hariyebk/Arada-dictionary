@@ -3,7 +3,7 @@ import Avatar from "/public/avatar.png"
 
 export default async function RightSidebar() {
     return (
-        <section className='ml-24 mr-5 mt-3'>
+        <section className='ml-24 mr-5 mt-3 max-xl:hidden'>
             <div className="w-[270px] h-auto py-10 px-4 bg-secondary shadow-xl rounded-md">
                 <h4 className="text-main text-center text-lg font-palanquin"> People to follow </h4>
                 <div className="px-14 mt-3">

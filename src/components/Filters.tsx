@@ -5,7 +5,12 @@ import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function Filters() {
+interface FilterPros {
+    showFilter?: boolean
+    setOpenMiniFilter?: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Filters({showFilter, setOpenMiniFilter}: FilterPros) {
 
     const [hide, setHide] = useState(false)
     const searchParams = useSearchParams()
@@ -17,6 +22,9 @@ export default function Filters() {
     }
 
     function handleFilter(query: string){
+        if(setOpenMiniFilter){
+            setOpenMiniFilter(false)
+        }
         const param = new URLSearchParams(searchParams)
         if(query && searchString !== query){
             param.set(QUERY_PARAMS.city, query.replace(/ /g, "_"))
@@ -29,13 +37,13 @@ export default function Filters() {
     }
 
     return (
-        <section className="ml-3 rounded-md px-10 pt-5">
+        <section className={`${showFilter ? "" : "max-xl:hidden"} ml-3 rounded-md px-10 pt-5`}>
             <h3 className="text-lg text-main font-palanquin"> Find Words by cities </h3>
             <hr className="my-3 border border-t-gray-600 opacity-45 w-[160px]" />
             <div className="mt-7">
                 {cities.map((city, i) => {
                     return (
-                        <div key={city} className={`${hide && i >= 5 && "hidden"} mt-2 flex items-center gap-2`}>
+                        <div key={city} className={`${hide && i >= 5 && "hidden"} mt-2 flex items-center ${showFilter ? "gap-4" : "gap-2"}`}>
                             <Checkbox onClick={() => handleFilter(city)} checked={city === searchString} />
                             <p className="text-sm"> {city} </p>
                         </div>

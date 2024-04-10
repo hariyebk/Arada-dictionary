@@ -8,8 +8,8 @@ interface CardProps {
 export default async function Card({post}: CardProps) {
 
     return (
-        <section className="ml-16">
-            <div className="bg-secondary mx-auto border rounded-md w-[550px] h-auto p-10">
+        <section className="lg:ml-16">
+            <div className="bg-secondary mx-auto border rounded-md w-[550px] max-md:w-[370px] h-auto p-10 max-md:p-6">
                 <h4 className={`text-2xl text-main font-bold ${AMAHRIC_FONT.className} uppercase`}> {post.word} </h4>
                 <p className={`mt-5 text-base text-black ${AMAHRIC_FONT.className} tracking-wide`}> 
                 {post.definition}

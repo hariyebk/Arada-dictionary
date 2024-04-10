@@ -5,10 +5,13 @@ import { CheckIfAuthorized } from "@/actions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { AUTH_STATUS, QUERY_PARAMS } from "@/constants";
+import { BsFunnelFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import SidebarFilter from "./SidebarFilter";
 
 export default function SearchHeader() {
     const [value, setValue] = useState("")
+    const [openMiniFilter, setOpenMiniFilter] = useState(false)
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const {replace, push} = useRouter()
@@ -34,6 +37,9 @@ export default function SearchHeader() {
         })
     }
     function handleSearch(){
+        if(!/[^a-zA-Z0-9]/.test(value)){
+            return toast.error("search using amharic letters")
+        }
         const param = new URLSearchParams(searchParams)
         if(value){
             param.set(QUERY_PARAMS.search, value)
@@ -47,7 +53,7 @@ export default function SearchHeader() {
 
     return (
         <section className='mt-20 flex flex-1 justify-center'>
-            <div className="flex items-center ml-32">
+            <div className="flex items-center max-sm:gap-8 gap-10 ml-12 xl:ml-48">
                 <form onSubmit={(e) => {
                     e.preventDefault()
                     if(!/[^a-zA-Z0-9]/.test(value)){
@@ -55,13 +61,18 @@ export default function SearchHeader() {
                     }
                     handleSearch()
                 }
-                } className="flex items-center justify-between bg-inherit border border-gray-400 rounded-md w-[650px] pr-6">
-                    <input type="text" placeholder='Search for words' onChange={(e) => setValue(e.target.value)} defaultValue={value} className='w-full h-full mr-10 px-4 py-4 bg-inherit focus-visible:outline-none font-palanquin' />
+                } className="flex items-center justify-between bg-inherit border border-gray-400 rounded-md lg:w-[600px] max-md:w-[330px] md:w-[480px] pr-6">
+                    <input type="text" placeholder='Search for words' onChange={(e) => setValue(e.target.value)} defaultValue={value} className='w-full h-full mr-10 px-4 py-4 bg-inherit max-md:text-base focus-visible:outline-none font-palanquin' />
                     <button type="button" onClick={() => handleSearch()}>
-                        <HiMagnifyingGlass className="w-7 h-7" />
+                        <HiMagnifyingGlass className="w-7 h-7 max-md:w-5 max-md:h-5" />
                     </button>
                 </form>
-                <button typeof="submit" onClick={handleAuthorization} className="mt-2 ml-20 px-5 py-4 rounded-md bg-primary text-white text-base font-bold font-palanquin"> Define a word </button>
+                {/* Filter Button */}
+                <button onClick={() => setOpenMiniFilter(true)}>
+                    <BsFunnelFill className="text-primary w-8 h-9 lg:hidden" />
+                </button>
+                <button typeof="submit" onClick={handleAuthorization} className="mt-2 max-xl:hidden ml-20 px-5 py-4 rounded-md bg-primary text-white text-base font-bold font-palanquin"> Define a word </button>
+                {openMiniFilter && <SidebarFilter setOpenMiniFilter={setOpenMiniFilter} />}
             </div>
         </section>
     )

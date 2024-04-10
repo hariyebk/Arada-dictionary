@@ -88,8 +88,8 @@ export default function Signin() {
         <section className="min-h-screen">
             <div className="flex items-center justify-center container">
                 <div className="flex flex-col flex-1 items-center">
-                    <h3 className="text-2xl text-black font-palanquin uppercase"> {isNew ? "Create your Account" : "Sign in to your Account"} </h3>
-                    <div className="mt-10 w-[500px] h-auto bg-white shadow-xl rounded-md pt-16 pb-20 pl-20">
+                    <h3 className="text-2xl max-md:text-xl text-black font-palanquin uppercase"> {isNew ? "Create your Account" : "Sign in to your Account"} </h3>
+                    <div className="mt-10 w-[500px] max-md:w-[400px] h-auto bg-white shadow-xl max-md:rounded-lg rounded-md pt-10 pb-20 pl-16 md:pl-20">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-3">
                                 {isNew && <div>
@@ -101,7 +101,7 @@ export default function Signin() {
                                 <FormItem className="flex flex-col items-start gap-3">
                                     <FormLabel> First Name </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} placeholder="abebe" className="w-[350px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} placeholder="abebe" className="w-[350px] max-md:w-[270px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -115,7 +115,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3">
                                     <FormLabel> Last Name </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} placeholder="balcha" className="w-[350px] text-stone-500 py-3 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} placeholder="balcha" className="w-[350px] max-md:w-[270px] text-stone-500 py-3 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -129,7 +129,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3">
                                     <FormLabel> Username </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} className="w-[350px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} className="w-[350px] max-md:w-[270px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -145,7 +145,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3">
                                     <FormLabel> Email address </FormLabel>
                                     <FormControl>
-                                        <Input type="text" disabled={isLoading} {...field} placeholder="mamo@example.com" className="w-[350px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
+                                        <Input type="text" disabled={isLoading} {...field} placeholder="mamo@example.com" className="w-[350px] max-md:w-[270px] text-stone-500 py-5 rounded-md bg-white border border-gray-400 focus-visible:outline-none focus-visible:ring-white" />
                                     </FormControl>
                                     <FormMessage className="-pt-5 formError" />
                                 </FormItem>
@@ -159,7 +159,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3" >
                                     <FormLabel> Password </FormLabel>
                                     <FormControl>
-                                        <div className="flex items-center justify-between w-[350px] rounded-md border border-gray-400 pr-5 py-1 pl-3">
+                                        <div className="flex items-center justify-between w-[350px] max-md:w-[270px] rounded-md border border-gray-400 pr-5 py-1 pl-3">
                                             <Input type={`${showPassword ? "text" : "password"}`} disabled={isLoading} {...field} placeholder="*********" className="bg-white focus:outline-none focus-visible:ring-white border-none" />
                                             {showPassword ? <button type="button" onClick={() => setShowPassword(false)}> 
                                                 <GoEye className="w-4 h-4" />
@@ -180,7 +180,7 @@ export default function Signin() {
                                 <FormItem className="mt-4 flex flex-col items-start gap-3" >
                                     <FormLabel> Confirm Password </FormLabel>
                                     <FormControl>
-                                        <div className="flex items-center justify-between w-[350px] rounded-md border border-gray-400 pr-5 py-1 pl-3">
+                                        <div className="flex items-center justify-between w-[350px] max-md:w-[270px] rounded-md border border-gray-400 pr-5 py-1 pl-3">
                                             <Input type={`${showConfirmPassword ? "text" : "password"}`} disabled={isLoading} {...field} placeholder="**********" className="bg-white focus:outline-none focus-visible:ring-white border-none" />
                                             { showConfirmPassword ?  <button type="button" onClick={() => setShowConfirmPassword(false)}> 
                                                 <GoEye className="w-4 h-4" /> 
@@ -201,7 +201,7 @@ export default function Signin() {
                                         <p>{emailMessage}</p>
                                     </div>
                                 )}
-                                <button type="submit" className="mt-10 w-[350px] bg-primary px-5 py-2 rounded-sm text-white font-semibold font-palanquin"> {isLoading ? (
+                                <button type="submit" className="mt-10 w-[350px] max-md:w-[270px] bg-primary px-5 py-2 rounded-sm text-white font-semibold font-palanquin"> {isLoading ? (
                                     <ClipLoader
                                     color="#ffffff"
                                     loading={true}
@@ -214,26 +214,26 @@ export default function Signin() {
                             </form>
                         </Form>
                         {!isNew ? <>
-                            <div className="mt-10 flex items-center gap-3">
-                                <hr className="border border-t-gray-400 w-[90px]" />
+                            <div className="mt-10 max-md:mt-14 flex items-center gap-3">
+                                <hr className="border border-t-gray-400 w-[90px] max-md:w-[60px]" />
                                 <p className="text-stone-500"> or countinue with </p>
-                                <hr className="border border-t-gray-400 w-[100px]" />
+                                <hr className="border border-t-gray-400 w-[100px] max-md:w-[60px]" />
                             </div>
-                            <div className="mt-10 flex items-start gap-10">
-                                <button onClick={() => handleSocialLogin("github")} disabled={isLoading} className="px-16 py-2 rounded-md border border-gray-300 disabled:cursor-not-allowed">
+                            <div className="mt-10 flex items-start gap-20">
+                                <button onClick={() => handleSocialLogin("github")} disabled={isLoading} className="px-16 max-md:px-10 py-2 rounded-md border border-gray-300 disabled:cursor-not-allowed">
                                     <VscGithubInverted className="w-6 h-6" />
                                 </button>
-                                <button onClick={() => handleSocialLogin("google")} disabled={isLoading} className="px-16 py-2 rounded-md border border-gray-300 disabled:cursor-not-allowed">
+                                <button onClick={() => handleSocialLogin("google")} disabled={isLoading} className="px-10 max-md:px-10 py-2 rounded-md border border-gray-300 disabled:cursor-not-allowed">
                                     <FcGoogle className="w-6 h-6" />
                                 </button>
                             </div>
-                            <div className="mt-10 flex items-center gap-6 text-stone-500 font-palanquin">
+                            <div className="mt-10 flex items-center gap-6 max-md:gap-10 max-md:text-xs text-stone-500 font-palanquin">
                                 <p> New To Arada dictionary ?. </p>
                                 <button onClick={handleToggle} className="underline"> Create new account </button>
                             </div>
                         </>
                         :  <div className="flex items-center justify-center mt-16 mr-14 ">
-                            <button onClick={handleToggle} disabled={isLoading} className="w-[250px] px-3 py-2 disabled:cursor-not-allowed text-stone-500 text-center border border-gray-400 rounded-md" aria-disabled={isLoading}> 
+                            <button onClick={handleToggle} disabled={isLoading} className="w-[250px] max-md:w-[170px] px-3 py-2 disabled:cursor-not-allowed max-md:text-sm text-stone-500 text-center border border-gray-400 rounded-md" aria-disabled={isLoading}> 
                                 Go back to Login 
                             </button>
                         </div>
