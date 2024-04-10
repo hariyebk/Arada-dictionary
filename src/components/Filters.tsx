@@ -1,16 +1,31 @@
 "use client"
-import { cities } from "@/constants";
+
+import { QUERY_PARAMS, cities } from "@/constants";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
-import {AMAHRIC_FONT} from "@/utils/font"
-
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Filters() {
 
     const [hide, setHide] = useState(false)
-
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
+    const {replace} = useRouter()
+    const searchString = searchParams.get(QUERY_PARAMS.city)?.replace("_", " ") || ""
     function handleHide(){
         hide ? setHide(false) : setHide(true)
+    }
+
+    function handleFilter(query: string){
+        const param = new URLSearchParams(searchParams)
+        if(query && searchString !== query){
+            param.set(QUERY_PARAMS.city, query.replace(/ /g, "_"))
+        }
+        else if(searchString === query){
+            param.delete(QUERY_PARAMS.city)
+        }
+        // Adding the query to the url
+        replace(`${pathname}?${param.toString()}`)
     }
 
     return (
@@ -21,7 +36,7 @@ export default function Filters() {
                 {cities.map((city, i) => {
                     return (
                         <div key={city} className={`${hide && i >= 5 && "hidden"} mt-2 flex items-center gap-2`}>
-                            <Checkbox />
+                            <Checkbox onClick={() => handleFilter(city)} checked={city === searchString} />
                             <p className="text-sm"> {city} </p>
                         </div>
                     )

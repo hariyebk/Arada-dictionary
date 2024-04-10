@@ -60,3 +60,13 @@ export enum LIKE_DISLIKE {
     like = "like",
     dislike = "dislike"
 }
+
+export enum AUTH_STATUS {
+    Authenticated = "Authenticated",
+    unAuthenticated = "unAuthenticated"
+}
+
+export enum QUERY_PARAMS {
+    city = "city",
+    search = "search"
+}

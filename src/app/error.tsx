@@ -12,7 +12,7 @@ export default function error({error}: ErrorProps){
     return (
         <section className="mt-48 min-h-screen">
             <div className="flex flex-1 items-center justify-center bg-background">
-                <p className="text-2xl text-black font-palanquin"> {isDatabaseError ? "Database connection lost, since it's a hobby plan" : "Something went wrong"} 😔 </p>
+                <p className="text-xl text-black font-palanquin"> {isDatabaseError ? "Database connection lost. The server needs to be restarted" : "Something went wrong"} 😔 </p>
             </div>
         </section>
     )

@@ -11,23 +11,22 @@ import { redirect } from "next/navigation"
 import { generateToken } from "@/lib/token"
 import { SendEmailVerification } from "@/lib/mail"
 import { getVerficationTokenByToken } from "@/db/verification-token"
-import { CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE, LIKE_DISLIKE } from "@/constants"
+import { AUTH_STATUS, CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE, LIKE_DISLIKE } from "@/constants"
 import { AuthError } from "next-auth"
 
 
 export async function CheckIfAuthorized(){
-    let session
     try{
-        session = await auth()
+        const session = await auth()
+        if(!session?.user){
+            return {status: AUTH_STATUS.unAuthenticated}
+        }
+        else{
+            return {status: AUTH_STATUS.Authenticated}
+        }
     }
-    catch(error){
-        throw error
-    }
-    if(!session?.user?.email){
-        redirect("/signin")
-    }
-    else{
-        redirect("/define")
+    catch(error: any){
+        return {error: "Database connecton failed"}
     }
 }
 export async function getCurrentUser(){

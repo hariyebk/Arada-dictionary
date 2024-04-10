@@ -62,4 +62,5 @@ model Post {
   spokenArea String
   like String[]
   dislike String[]
+  flag String[]
 }
