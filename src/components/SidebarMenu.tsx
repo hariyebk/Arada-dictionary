@@ -37,10 +37,10 @@ export default function SidebarMenu({setOpenMenu}: SidebarMenuProps) {
             <button onClick={() => setOpenMenu(false)} className="w-full flex justify-start ml-10">
                 <IoIosCloseCircle className="w-8 h-8 text-primary" />
             </button>
-            <div className="mt-10 flex flex-col items-start gap-5">
+            <div className="mt-10 mr-3 flex flex-col items-start gap-5">
                 {MobileNav.map((route) => {
                     return (
-                        <button key={route.href} onClick={() => handleNavigation(route.href)}> {route.label} </button>
+                        <button key={route.href} onClick={() => handleNavigation(route.href)} className="text-lg text-black font-palanquin"> {route.label} </button>
                     )
                 })}
             </div>

@@ -4,6 +4,7 @@ import  Credentials from "next-auth/providers/credentials"
 import { AuthenticationFormSchema } from "./src/lib/validation"
 import type { NextAuthConfig } from "next-auth"
 import { getUserByEmail } from "./src/actions"
+import { DATABASE_CONNECTION_ERROR_MESSAGE } from "@/constants"
 
 
 export default {
@@ -21,7 +22,9 @@ export default {
                 const validatedFields = AuthenticationFormSchema.safeParse(credentials)
                 if(validatedFields.success){
                     const {email, password} = validatedFields.data
-                    const user = await getUserByEmail(email)
+                    const result = await getUserByEmail(email)
+                    if(result.error) throw Error(DATABASE_CONNECTION_ERROR_MESSAGE.at(0))
+                    const user = result.success
                     /**
                      * If the user has been registered before they should have the "hashedPassword" field in their data
                      */

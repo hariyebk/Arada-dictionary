@@ -14,9 +14,9 @@ export default async function Home({searchParams}: {searchParams?: {city?: strin
   return (
     <main className="min-h-screen">
         <SearchHeader />
-        <div className="w-full mb-28 mt-16 max-md:mt-10 px-10 flex items-start">
+        <div className="w-full mb-48 mt-16 max-md:mt-10 px-10 flex items-start">
             <Filters />
-            <div className="flex flex-1 flex-col items-center">
+            <div className="flex flex-1 flex-col items-center xl:items-start">
                 {queriedPosts.length === 0 ?
                 <div className="flex items-center mt-28 ml-5">
                     <p className="text-xl text-black font-palanquin"> No Posts found that match your query 😔 </p>

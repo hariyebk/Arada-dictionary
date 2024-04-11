@@ -77,9 +77,23 @@ export default function PostButtons({post}: PostButtonsProps) {
                 </button>
             </div>
             <div>
-                <button className="flex items-center gap-2 rounded-full px-5 py-2 border border-gray-800 hover:bg-primary hover:text-white">
-                    <IoFlagOutline className="w-5 h-5" />
-                    <span> flag </span>
+                <button onClick={() => handleclick(LIKE_DISLIKE.flag)} disabled={isLoading} className={`${session.data?.user ? post.flag.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"}  w-24 flex items-center gap-2 rounded-full px-5 py-2 border border-gray-800`}>
+                    {isLoading && type === LIKE_DISLIKE.flag ? (
+                    <div>
+                        <ClipLoader
+                            color="#ffffff"
+                            loading={true}
+                            size={14}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                            className="flex items-center justify-center ml-5"
+                        />
+                    </div>
+                    ) :
+                    <div className="flex items-center justify-center just gap-3">
+                        <IoFlagOutline className="w-5 h-5" />
+                        <span> {post.flag.length} </span>
+                    </div>}  
                 </button> 
             </div>
         </div>

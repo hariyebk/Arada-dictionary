@@ -58,7 +58,8 @@ export const CREDENTIALS_PROVIDER = "credentials"
 
 export enum LIKE_DISLIKE {
     like = "like",
-    dislike = "dislike"
+    dislike = "dislike",
+    flag = "flag"
 }
 
 export enum AUTH_STATUS {

@@ -80,11 +80,11 @@ export async function getUserByEmail(email: string){
             email
         }
     })
-    if(!user) return null
-    return user
+    if(!user) return {success: null}
+    return {success: user}
     }
     catch{
-        return null
+        return {error: "Database connection failed"}
     }
 }
 export async function getUserById(id: string){
@@ -111,7 +111,9 @@ export async function Login(values: z.infer<typeof AuthenticationFormSchema>){
     const isMyMail = email === process.env.MY_EMAIL
     try{
         // check if the user has verified their email
-        const user = await getUserByEmail(email)
+        const result = await getUserByEmail(email)
+        if(result.error) return {error: result.error}
+        const user = result.success
         if(!user || !user.hashedPassword){
             return {error: "User not found"}
         }
@@ -159,7 +161,9 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
         /**
          * Check if the email already exists before creating the user
          */
-        const user = await getUserByEmail(email)
+        const result = await getUserByEmail(email)
+        if(result.error) return {error: result.error}
+        const user = result.success
         if(user){
             return {error: "User with this email already exists"}
         }
@@ -430,7 +434,7 @@ export async function LikeDislike({type, postId}: {type: string, postId: string}
                 })
             }
         }
-        else{
+        else if(type === LIKE_DISLIKE.dislike){
             // Check If the user Already disliked the post
             const userAlreadyDisliked = post.dislike.includes(currentUser.id)
             let tempArray
@@ -466,6 +470,28 @@ export async function LikeDislike({type, postId}: {type: string, postId: string}
                     }
                 })
             }
+        }
+        else if(type === LIKE_DISLIKE.flag){
+            // Check if the user has already flagged the post
+            const userAlreadyFlagged = post.flag.includes(currentUser.id)
+            let tempArray
+            if(userAlreadyFlagged){
+                // remove the current user from the array
+                tempArray = post.flag.filter((userId) => userId !== currentUser.id)
+            }
+            else {
+                // add the user to the flag array of the post
+                tempArray = [...post.flag, currentUser.id]
+            }
+            // update the post
+            await db.post.update({
+                where: {
+                    id: postId
+                },
+                data: {
+                    flag: tempArray
+                }
+            })
         }
 
         revalidatePath("/")
