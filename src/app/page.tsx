@@ -1,8 +1,9 @@
 import { FecthAllPosts } from "@/actions"
 import {Card, SearchHeader, Filters, RightSidebar} from "@/components"
+import Pagination from "@/components/Pagination"
 
-export default async function Home({searchParams}: {searchParams?: {city?: string, search?: string} }) {
-  const posts = await FecthAllPosts()
+export default async function Home({searchParams}: {searchParams?: {city?: string, search?: string, page?: string} }) {
+  const {posts, count} = await FecthAllPosts(searchParams?.page ? parseInt(searchParams.page) : 1)
   let queriedPosts = posts
   if(searchParams?.city){
     queriedPosts = queriedPosts.filter((post) => post.spokenArea === searchParams.city?.replaceAll("_", " "))
@@ -12,9 +13,9 @@ export default async function Home({searchParams}: {searchParams?: {city?: strin
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen w-full container max-sm:pr-10">
         <SearchHeader />
-        <div className="w-full mb-48 mt-16 max-md:mt-10 px-10 flex items-start">
+        <div className="mb-48 mt-16 max-md:mt-10 md:px-5 flex items-start">
             <Filters />
             <div className="flex flex-1 flex-col items-center xl:items-start">
                 {queriedPosts.length === 0 ?
@@ -30,6 +31,7 @@ export default async function Home({searchParams}: {searchParams?: {city?: strin
                   )
                 })
                 }
+                <Pagination totalResults={searchParams?.city || searchParams?.search ? queriedPosts.length : count} />
             </div>
             <RightSidebar />
         </div>

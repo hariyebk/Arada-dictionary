@@ -88,4 +88,7 @@
   .formError {
     @apply mt-1.5 text-sm text-ellipsis text-red-500 font-palanquin
   }
+  .pagination {
+    @apply px-5 py-3 rounded-full text-base font-palanquin
+  }
 }

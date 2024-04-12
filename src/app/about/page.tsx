@@ -2,7 +2,7 @@
 export default function About() {
     return (
         <section className="min-h-screen mb-20">
-            <div className="lg:w-[700px]  max-sm:w-[430px] sm:w-[470px] md:w-[600px] mx-auto">
+            <div className="lg:w-[700px]  max-sm:w-[320px] sm:w-[470px] md:w-[600px] mx-auto">
                 <div className="flex flex-col flex-1 items-start gap-5">
                     <p className="aboutP"> 
                     Ever found yourself puzzled by Specific kinds of Amharic words people use that you've never heard before? If so, you're not alone. That's why I made Arada Dictionary. Arada Dictionary isn't just about finding meanings for words. It's like a big team effort where everyone helps each other understand how people talk casually. Imagine it like a big club where we all share the latest words and phrases. Whether you're curious about new words or just want to fit in better with how people talk nowadays, Arada Dictionary is here to help. It's still in the early stages, but I'm working on it to make it awesome.

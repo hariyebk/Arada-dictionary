@@ -89,7 +89,7 @@ export default function Signin() {
             <div className="flex items-center justify-center container">
                 <div className="flex flex-col flex-1 items-center">
                     <h3 className="text-2xl max-md:text-xl text-black font-palanquin uppercase"> {isNew ? "Create your Account" : "Sign in to your Account"} </h3>
-                    <div className="mt-10 w-[500px] max-md:w-[400px] h-auto bg-white shadow-xl max-md:rounded-lg rounded-md pt-10 pb-20 pl-16 md:pl-20">
+                    <div className="mt-10 w-[500px] max-sm:w-[350px] h-auto bg-white shadow-xl max-md:rounded-lg rounded-md pt-10 pb-20 pl-10 md:pl-20">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-3">
                                 {isNew && <div>

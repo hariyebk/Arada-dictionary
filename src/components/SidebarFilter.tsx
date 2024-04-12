@@ -9,8 +9,8 @@ interface SidebarFiltersProbs {
 
 export default function SidebarFilter({setOpenMiniFilter}: SidebarFiltersProbs) {
     return (
-        <section className="bg-background absolute inset-y-0 right-0 py-16 w-[300px] h-full flex flex-col items-center">
-            <button onClick={() => setOpenMiniFilter(false)} className="w-full flex justify-end mr-24">
+        <section className="bg-background absolute inset-y-0 right-0 max-sm:py-8 py-16 w-[300px] max-sm:w-[250px] h-full flex flex-col items-center">
+            <button onClick={() => setOpenMiniFilter(false)} className="w-full flex justify-end max-sm:mr-10 mr-24">
                 <IoIosCloseCircle className="w-8 h-8 text-primary" />
             </button>
             <div className="pr-8 pl-3 mt-10">

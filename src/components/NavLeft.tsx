@@ -15,7 +15,7 @@ export default function NavLeft() {
     return (
         <section>
             <div className="flex items-center gap-2">
-                <div className="max-lg:hidden">
+                <div className="max-md:hidden">
                     <Image src={Logo} priority={true} alt="logo" className="object-contain" />
                 </div>
                 <button onClick={() => setOpenMenu(true)} className="md:hidden mr-3">

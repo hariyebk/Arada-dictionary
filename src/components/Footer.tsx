@@ -6,9 +6,9 @@ export default async function Footer() {
     return (
         <section id="footer" className="mt-48 relative inset-x-0 bottom-0 max-md:pb-10 pb-16">
             <div className="h-[100px] bg-inherit md:py-10 md:px-20 border border-t-gray-600 border-b-0 border-opacity-35">
-                <div className="py-7 flex max-md:flex-col items-center justify-between max-md:gap-10 text-lg max-sm:tet-base text-black font-palanquin lg:px-10">
+                <div className="py-7 max-sm:py-4 flex max-md:flex-col items-center justify-between max-md:gap-10 text-lg max-sm:tet-xs text-black text-ellipsis font-palanquin px-14 lg:px-10">
                     <div>
-                        <p> @ 2024 &nbsp; Arada dictionary Inc. &nbsp; All rights reserved </p>
+                        <p> @ 2024 &nbsp; Arada dictionary Inc. &nbsp; <span className="max-sm:ml-10 mt-5"> All rights reserved </span> </p>
                     </div>
                     <div className="lg:ml-36 flex items-center gap-6">
                         <Link href="https://youtube.com"> <FaYoutube className="w-6 h-6 text-main" /> </Link>

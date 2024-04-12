@@ -33,7 +33,7 @@ export default function SidebarMenu({setOpenMenu}: SidebarMenuProps) {
     }
 
     return (
-        <section className="bg-background absolute inset-y-0 left-0 py-16 w-[200px] h-full flex flex-col items-center ">
+        <section className="bg-background absolute inset-y-0 left-0 py-16 w-[200px] max-sm:w-[150px] h-full flex flex-col items-center ">
             <button onClick={() => setOpenMenu(false)} className="w-full flex justify-start ml-10">
                 <IoIosCloseCircle className="w-8 h-8 text-primary" />
             </button>

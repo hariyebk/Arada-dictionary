@@ -36,7 +36,7 @@ export default function PostButtons({post}: PostButtonsProps) {
     }
     
     return (
-        <div className="w-full mt-10 flex items-center justify-between">
+        <div className="w-full mt-10 max-sm:mt-16 flex items-center justify-between">
             <div className="flex items-center">
                 <button onClick={() => handleclick(LIKE_DISLIKE.like)} disabled={isLoading} className={`${ session.data?.user ? post.like.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"} w-20 flex items-center gap-2 border border-r-0 border-gray-800 disabled:cursor-not-allowed px-5 py-2 rounded-l-full hover:border-0.5 hover:border-r-0 focus-visible:outline-none`}>
                     {isLoading && type === LIKE_DISLIKE.like ? (
@@ -77,7 +77,7 @@ export default function PostButtons({post}: PostButtonsProps) {
                 </button>
             </div>
             <div>
-                <button onClick={() => handleclick(LIKE_DISLIKE.flag)} disabled={isLoading} className={`${session.data?.user ? post.flag.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"}  w-24 flex items-center gap-2 rounded-full px-5 py-2 border border-gray-800`}>
+                <button onClick={() => handleclick(LIKE_DISLIKE.flag)} disabled={isLoading} className={`${session.data?.user ? post.flag.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"} flex items-center gap-2 rounded-full px-5 py-2 border border-gray-800`}>
                     {isLoading && type === LIKE_DISLIKE.flag ? (
                     <div>
                         <ClipLoader
@@ -86,7 +86,7 @@ export default function PostButtons({post}: PostButtonsProps) {
                             size={14}
                             aria-label="Loading Spinner"
                             data-testid="loader"
-                            className="flex items-center justify-center ml-5"
+                            className="flex items-center justify-center md:ml-5"
                         />
                     </div>
                     ) :

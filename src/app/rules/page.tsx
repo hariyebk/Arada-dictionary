@@ -3,7 +3,7 @@ import { rules } from "@/constants";
 export default function Rules() {
     return (
         <section className="min-h-screen">
-            <div className="lg:w-[700px]  max-sm:w-[430px] sm:w-[470px] md:w-[600px] mx-auto">
+            <div className="lg:w-[700px] max-sm:w-[310px] sm:w-[470px] md:w-[600px] mx-auto">
                 <h2 className="text-3xl max-md:text-2xl text-black text-center font-palanquin"> Community Guidelines </h2>
                 <ul className="list-decimal mt-20 max-md:ml-3 ml-7">
                     {rules.map((element) => {

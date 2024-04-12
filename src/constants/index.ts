@@ -69,7 +69,8 @@ export enum AUTH_STATUS {
 
 export enum QUERY_PARAMS {
     city = "city",
-    search = "search"
+    search = "search",
+    page = "page"
 }
 
 export const MobileNav = [
@@ -90,5 +91,13 @@ export const MobileNav = [
         label: "Define"
     }
 ]
+
+export enum PAGE_NUMBERS {
+    one = "1",
+    two = "2",
+    three = "3"
+}
+
+export const PAGE_SIZE = 7
 
 export const PROTECTED_ROUTE = "/define"

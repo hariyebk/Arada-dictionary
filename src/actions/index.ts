@@ -11,7 +11,7 @@ import { redirect } from "next/navigation"
 import { generateToken } from "@/lib/token"
 import { SendEmailVerification } from "@/lib/mail"
 import { getVerficationTokenByToken } from "@/db/verification-token"
-import { AUTH_STATUS, CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE, LIKE_DISLIKE } from "@/constants"
+import { AUTH_STATUS, CREDENTIALS_PROVIDER, DATABASE_CONNECTION_ERROR_MESSAGE, LIKE_DISLIKE, PAGE_SIZE } from "@/constants"
 import { AuthError } from "next-auth"
 
 
@@ -205,14 +205,18 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
         })
     }
 }
-export async function FecthAllPosts(){
+export async function FecthAllPosts(pageNumber: number){
     try{
         const posts = await db.post.findMany({
+            skip: (pageNumber - 1 ) * PAGE_SIZE,
+            take: PAGE_SIZE,
             orderBy: {
                 created_at: "desc"
             }
         })
-        return posts
+        const count = await db.post.count()
+
+        return {posts, count}
     }
     catch(error: any){
         throw new Error(error)
@@ -252,7 +256,7 @@ export async function CheckEmailVerification(token: string){
 
     redirect("/signin")
 
-}
+} 
 // export async function LikePost(postId: string){
 //     try{
 //         // first find the post
@@ -472,26 +476,38 @@ export async function LikeDislike({type, postId}: {type: string, postId: string}
             }
         }
         else if(type === LIKE_DISLIKE.flag){
-            // Check if the user has already flagged the post
-            const userAlreadyFlagged = post.flag.includes(currentUser.id)
-            let tempArray
-            if(userAlreadyFlagged){
-                // remove the current user from the array
-                tempArray = post.flag.filter((userId) => userId !== currentUser.id)
+            // Check if the post a maximum of 3 flags already
+            const NumberOfFlags = post.flag.length
+            if(NumberOfFlags >= 3){
+                // delete the post because 4 users flagged it, most probably it's unAppropriate post
+                await db.post.delete({
+                    where: {
+                        id: postId
+                    }
+                })
             }
-            else {
-                // add the user to the flag array of the post
-                tempArray = [...post.flag, currentUser.id]
-            }
-            // update the post
-            await db.post.update({
-                where: {
-                    id: postId
-                },
-                data: {
-                    flag: tempArray
+            else{
+                // Check if the user has already flagged the post
+                const userAlreadyFlagged = post.flag.includes(currentUser.id)
+                let tempArray
+                if(userAlreadyFlagged){
+                    // remove the current user from the array
+                    tempArray = post.flag.filter((userId) => userId !== currentUser.id)
                 }
-            })
+                else {
+                    // add the user to the flag array of the post
+                    tempArray = [...post.flag, currentUser.id]
+                }
+                // update the post
+                await db.post.update({
+                    where: {
+                        id: postId
+                    },
+                    data: {
+                        flag: tempArray
+                    }
+                })
+            }
         }
 
         revalidatePath("/")
