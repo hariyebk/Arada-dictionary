@@ -1,7 +1,7 @@
 "use client"
 
 import { HiMagnifyingGlass } from "react-icons/hi2";
-import { CheckIfAuthorized } from "@/actions";
+import { CheckIfAuthorized, revalidateTheHomePage} from "@/actions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { AUTH_STATUS, QUERY_PARAMS } from "@/constants";
@@ -43,6 +43,11 @@ export default function SearchHeader() {
         const param = new URLSearchParams(searchParams)
         if(value){
             param.set(QUERY_PARAMS.search, value)
+            revalidateTheHomePage().then((message) => {
+                if(message?.error){
+                    return toast.error(message.error)
+                }
+            })
         }
         else{
             param.delete(QUERY_PARAMS.search)

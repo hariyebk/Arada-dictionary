@@ -205,18 +205,27 @@ export async function Register(values: z.infer<typeof AuthenticationFormSchema>)
         })
     }
 }
-export async function FecthAllPosts(pageNumber: number){
+export async function FecthAllPosts({pageNumber, city, search}: {pageNumber: number, city: string | null, search: string | null | undefined}){
     try{
-        const posts = await db.post.findMany({
-            skip: (pageNumber - 1 ) * PAGE_SIZE,
-            take: PAGE_SIZE,
+        let query = await db.post.findMany({
             orderBy: {
                 created_at: "desc"
             }
         })
+        if(city){
+            query = query.filter((post) => post.spokenArea === city)
+        }
+        if(search){
+            query = query.filter((post) => post.word === search)
+        }
+        const totalQueriedResults = query.length
+        const offset = (pageNumber - 1 ) * PAGE_SIZE
+        // Slicing the array based on the page size
+        const posts = query.slice(offset, offset + PAGE_SIZE)
         const count = await db.post.count()
 
-        return {posts, count}
+        return {posts, count, totalQueriedResults}
+
     }
     catch(error: any){
         throw new Error(error)
@@ -516,5 +525,13 @@ export async function LikeDislike({type, postId}: {type: string, postId: string}
     }
     catch(error: any){
         return {error: "Database connection failed."}
+    }
+}
+export async function revalidateTheHomePage(){
+    try{
+        revalidatePath("/")
+    }
+    catch(error: any){
+        return {error: "something went"}
     }
 }

@@ -4,6 +4,8 @@ import { QUERY_PARAMS, cities } from "@/constants";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
+import { revalidateTheHomePage } from "@/actions";
 
 interface FilterPros {
     showFilter?: boolean
@@ -28,6 +30,11 @@ export default function Filters({showFilter, setOpenMiniFilter}: FilterPros) {
         const param = new URLSearchParams(searchParams)
         if(query && searchString !== query){
             param.set(QUERY_PARAMS.city, query.replace(/ /g, "_"))
+            revalidateTheHomePage().then((message) => {
+                if(message?.error){
+                    return toast.error(message.error)
+                }
+            })
         }
         else if(searchString === query){
             param.delete(QUERY_PARAMS.city)
@@ -50,7 +57,6 @@ export default function Filters({showFilter, setOpenMiniFilter}: FilterPros) {
                     )
                 })}
                 <button onClick={handleHide} className="mt-3 ml-5 text-sm text-main font-palanquin"> {hide ? "expand ..." : "see less ..."} </button>
-
             </div>
         </section>
     )

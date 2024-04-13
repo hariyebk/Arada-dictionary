@@ -21,6 +21,7 @@ export default async function RightSidebar() {
                         <Image src={Avatar} alt="prfolie-image" className="rounded-full w-8 h-8" />
                         <p className="text-base text-black font-palanquin"> @haribk </p>
                     </div>
+                    <p className="mt-8 ml-2 text-lg text-black font-palanquin"> Coming soon </p>
                 </div>
             </div>
         </section>

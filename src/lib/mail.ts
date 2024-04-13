@@ -6,8 +6,9 @@ interface SendEmailVerificationProps {
     name: string
 }
 const resend = new Resend(process.env.RESEND_API_KEY)
+const domain = process.env.NEXTAUTH_URL
 export async function SendEmailVerification({email, token, name}: SendEmailVerificationProps){
-    const confirmationLink = `http://localhost:3000/verification?token=${token}`
+    const confirmationLink = `${domain}/verification?token=${token}`
     const {data, error} = await resend.emails.send({
         from: "onboarding@resend.dev",
         to: email,
