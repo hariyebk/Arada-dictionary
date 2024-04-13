@@ -53,7 +53,7 @@ export async function CreatePost(values: z.infer<typeof WordDefinitionFormSchema
         if(!user){
             return {error: "Database connection failed"}
         }
-        await db.post.create({
+        const newpost = await db.post.create({
             data: {
                 word,
                 definition,
@@ -63,6 +63,8 @@ export async function CreatePost(values: z.infer<typeof WordDefinitionFormSchema
                 posterUsername: user?.username!
             }
         })
+        console.log(newpost)
+        if(!newpost) return {error: "something went wrong while creating the post"}
     }
     catch(error: any){
         if(error instanceof Error){
