@@ -221,8 +221,8 @@ export async function FecthAllPosts({pageNumber, city, search}: {pageNumber: num
         }
         const totalQueriedResults = query.length
         const offset = (pageNumber - 1 ) * PAGE_SIZE
-        // Slicing the array based on the page size
-        const posts = query.slice(offset, offset + PAGE_SIZE)
+        // Slicing the array based on the page size when there is no search query
+        const posts = search ? query : query.slice(offset, offset + PAGE_SIZE)
         const count = await db.post.count()
 
         return {posts, count, totalQueriedResults}
