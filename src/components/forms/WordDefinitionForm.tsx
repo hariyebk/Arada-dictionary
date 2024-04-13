@@ -33,10 +33,14 @@ export default function WordDefinitionForm(){
         try{
             const result = await CreatePost(values)
             if(result?.error){
+                console.log(result.error)
                 return toast.error(result.error)
             }
-            toast.success("post created successfully")
-            router.push("/")
+            if(result.success?.id){
+                console.log(result.success)
+                toast.success("post created successfully")
+                router.push("/")
+            }
         }
         catch(error: any){
             console.log(error)

@@ -63,8 +63,7 @@ export async function CreatePost(values: z.infer<typeof WordDefinitionFormSchema
                 posterUsername: user?.username!
             }
         })
-        console.log(newpost)
-        if(!newpost) return {error: "something went wrong while creating the post"}
+        return {success: newpost}
     }
     catch(error: any){
         if(error instanceof Error){
