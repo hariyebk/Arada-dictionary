@@ -4,7 +4,7 @@ import Pagination from "@/components/Pagination"
 
 export default async function Home({searchParams}: {searchParams?: {city?: string, search?: string, page?: string} }) {
   const city = searchParams?.city ? searchParams.city?.replaceAll("_", " ") : null
-  const search = searchParams?.search ? searchParams.city?.replaceAll("_", " ") : null
+  const search = searchParams?.search ? searchParams.search : null
   const page = searchParams?.page ? parseInt(searchParams.page) : 1
 
   const {posts, count, totalQueriedResults} = await FecthAllPosts({pageNumber: page, city, search})
