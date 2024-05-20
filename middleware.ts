@@ -7,14 +7,10 @@ export const {auth: middleware} = NextAuth(authConfig)
 export default middleware((req) => {
     const {nextUrl} = req
     const isLoggedIn = Boolean(req.auth)
-    console.log(isLoggedIn)
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute =  authRoutes.includes(nextUrl.pathname)
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthRoute)
 
-    /**
-     * return null means , dont do nothing just allow it to pass.
-     */
     if(isApiAuthRoute) return NextResponse.next()
     if(isAuthRoute){
         /** 

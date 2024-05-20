@@ -22,8 +22,8 @@ export default function Pagination({totalResults}: PaginationProps) {
     };
 
     return (
-        <section className="w-full  flex items-center justify-center md:ml-5">
-            <div className="mt-16 flex items-center justify-center gap-6">
+        <section className="w-full flex items-center justify-center md:ml-5">
+            <div className="mt-16 flex items-center justify-center max-sm:gap-3 gap-6">
                 {pageNumbers === 1 ? null : Array.from({length: pageNumbers}, (_, index) => index + 1).map((pageNum) => {
                     return (
                     <div key={pageNum}>

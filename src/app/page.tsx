@@ -10,27 +10,30 @@ export default async function Home({searchParams}: {searchParams?: {city?: strin
   const {posts, count, totalQueriedResults} = await FecthAllPosts({pageNumber: page, city, search})
 
   return (
-    <main className="min-h-screen w-full container max-sm:pr-10">
+    <main className="min-h-screen w-full container ">
         <SearchHeader />
-        <div className="mb-48 mt-16 max-md:mt-10 md:px-5 flex items-start">
+        <div className="mb-48 mt-10 flex items-start max-xl:justify-center xl:justify-start gap-7">
             <Filters />
-            <div className="flex flex-1 flex-col items-center xl:items-start">
+            <div className="flex items-start xl:gap-20 xl:ml-16">
                 {posts.length === 0 ?
                 <div className="flex items-center mt-28 ml-5 xl:ml-36">
                     <p className="text-xl max-sm:text-base text-black font-palanquin"> No Posts found that match your query 😔 </p>
                 </div>
                 :
-                posts.map((post, i) => {
-                  return (
-                    <div key={post.id} className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
-                      <Card post={post} />
-                    </div>
-                  )
-                })
+                <div className="flex flex-col items-start">
+                    {posts.map((post, i) => {
+                      return (
+                        <div key={post.id} className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
+                            <Card post={post} />
+                        </div>
+                      )
+                    })
+                    }
+                    <Pagination totalResults={searchParams?.city || searchParams?.search ? totalQueriedResults : count} />
+                </div>
                 }
-                <Pagination totalResults={searchParams?.city || searchParams?.search ? totalQueriedResults : count} />
+                <RightSidebar />
             </div>
-            <RightSidebar />
         </div>
     </main>
   )
