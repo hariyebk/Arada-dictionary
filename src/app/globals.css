@@ -77,10 +77,10 @@
 
 @layer utilities {
   .label {
-    @apply text-xl max-md:text-lg text-black leading-6 font-palanquin
+    @apply md:text-xl max-sm:text-base sm:text-lg text-black leading-6 font-palanquin
   }
   .aboutP {
-    @apply text-lg text-black text-justify font-palanquin leading-8
+    @apply max-sm:text-base sm:text-lg text-black max-sm:break-all md:text-justify font-palanquin leading-9
   }
   .aboutT {
     @apply mt-7 text-2xl max-md:text-xl text-main font-palanquin font-bold

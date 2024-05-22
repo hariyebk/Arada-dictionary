@@ -15,23 +15,25 @@ export default async function Home({searchParams}: {searchParams?: {city?: strin
         <div className="mb-48 mt-10 flex items-start max-xl:justify-center xl:justify-start gap-7">
             <Filters />
             <div className="flex items-start xl:gap-20 xl:ml-16">
-                {posts.length === 0 ?
-                <div className="flex items-center mt-28 ml-5 xl:ml-36">
-                    <p className="text-xl max-sm:text-base text-black font-palanquin"> No Posts found that match your query 😔 </p>
-                </div>
-                :
-                <div className="flex flex-col items-start">
-                    {posts.map((post, i) => {
-                      return (
-                        <div key={post.id} className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
-                            <Card post={post} />
-                        </div>
-                      )
-                    })
-                    }
-                    <Pagination totalResults={searchParams?.city || searchParams?.search ? totalQueriedResults : count} />
-                </div>
-                }
+              <div className="lg:w-[550px] max-sm:w-[300px] sm:w-[400px] h-auto">
+                  {posts.length === 0 ?
+                  <div className="flex flex-wrap max-sm:leading-6 justify-center mt-10">
+                      <p className="text-xl max-sm:text-base text-black font-palanquin"> No Posts found that match your query 😔 </p>
+                  </div>
+                  :
+                  <div className="flex flex-col items-start">
+                      {posts.map((post, i) => {
+                        return (
+                          <div key={post.id} className={`${i !== 0 ? "mt-16" : "mt-3"}`}>
+                              <Card post={post} />
+                          </div>
+                        )
+                      })
+                      }
+                      <Pagination totalResults={searchParams?.city || searchParams?.search ? totalQueriedResults : count} />
+                  </div>
+                  }
+              </div>
                 <RightSidebar />
             </div>
         </div>

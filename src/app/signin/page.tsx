@@ -219,7 +219,7 @@ export default function Signin() {
                                 <p className="text-stone-500"> or countinue with </p>
                                 <hr className="border border-t-gray-400 w-[100px] max-md:w-[60px]" />
                             </div>
-                            <div className="mt-10 flex items-start gap-20">
+                            <div className="mt-10 flex flex-wrap items-start gap-20">
                                 <button onClick={() => handleSocialLogin("github")} disabled={isLoading} className="px-16 max-md:px-10 py-2 rounded-md border border-gray-300 disabled:cursor-not-allowed">
                                     <VscGithubInverted className="w-6 h-6" />
                                 </button>
