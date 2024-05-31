@@ -11,7 +11,7 @@ export default async function Navbar() {
     const session = await auth()
 
     return (
-        <nav className="mb-20 lg:px-20 max-lg:py-7 border-[1px] bg-transparent border-b-gray-600 border-opacity-35" >
+        <nav className="max-sm:mb-10 sm:mb-16 lg:px-20 max-md:py-5 border-[1px] bg-transparent border-b-gray-600 border-opacity-35" >
             <ul className="flex items-center justify-between max-md:mr-10 max-md:ml-6 max-lg:mx-10">
                 <NavLeft />
                 <div className="flex items-center gap-10 text-lg text-black font-palanquin">

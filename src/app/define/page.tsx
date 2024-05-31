@@ -13,7 +13,7 @@ export default async function Define(){
 
     return (
         <section className="min-h-screen mb-36">
-            <div className="mr-20 ml-16 flex items-start justify-center gap-28">
+            <div className="lg:mr-20 lg:ml-16 flex items-start justify-center gap-28">
                 <div className="max-lg:hidden">
                     <div className="ml-20 flex flex-col items-start gap-6">
                         <Label className="text-xl text-center font-palanquin"> Thanks for your contributions 🎉 </Label>

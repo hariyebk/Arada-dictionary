@@ -36,7 +36,7 @@ export default function PostButtons({post}: PostButtonsProps) {
     }
     
     return (
-        <div className="mt-10 max-sm:mt-16 flex max-sm:flex-wrap max-sm:gap-6 items-center justify-between">
+        <div className="mt-10 flex max-sm:flex-wrap max-sm:gap-6 items-center justify-between">
             <div className="flex items-center">
                 <button onClick={() => handleclick(LIKE_DISLIKE.like)} disabled={isLoading} className={`${ session.data?.user ? post.like.includes(session.data.user.id) ? "bg-primary text-white" : "hover:bg-primary hover:text-white" : "hover:bg-primary hover:text-white"} w-20 flex items-center gap-2 border border-r-0 border-gray-800 disabled:cursor-not-allowed px-5 py-2 rounded-l-full hover:border-0.5 hover:border-r-0 focus-visible:outline-none`}>
                     {isLoading && type === LIKE_DISLIKE.like ? (

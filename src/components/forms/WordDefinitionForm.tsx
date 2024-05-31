@@ -52,7 +52,7 @@ export default function WordDefinitionForm(){
     }
 
     return (
-        <section className="max-lg:mx-auto">
+        <section className="max-lg:w-full max-lg:flex items-center justify-center max-sm:px-6">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={`${AMAHRIC_FONT.className} max-md:ml-6`}>
                     {/* WORD */}

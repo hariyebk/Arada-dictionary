@@ -57,7 +57,7 @@ export default function SearchHeader() {
     }
 
     return (
-        <section className='-mt-10 flex flex-wrap justify-center'>
+        <section className='mt-10 flex flex-wrap justify-center'>
             <div className="flex items-center max-sm:gap-8 gap-10 md:ml-12 xl:ml-64">
                 <form onSubmit={(e) => {
                     e.preventDefault()

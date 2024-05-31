@@ -14,7 +14,7 @@ export default async function Card({post}: CardProps) {
                 <p className={`mt-5 text-base text-black ${AMAHRIC_FONT.className} tracking-wide`}> 
                 {post.definition}
                 </p>
-                <div className="pt-5">
+                <div className="max-sm:pt-2.5 sm:pt-3">
                     {post.examples.map((example) => {
                         return (
                             <div key={example}>

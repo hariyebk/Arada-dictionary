@@ -4,9 +4,9 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default async function Footer() {
     return (
-        <section id="footer" className="mt-48 relative inset-x-0 bottom-0">
+        <section id="footer" className="mt-28 relative inset-x-0 bottom-0">
             <div className="w-full h-[100px]">
-                <div className="h-[80px] md:px-20 pb-6 bg-inherit border border-t-gray-600 border-b-0 border-opacity-35">
+                <div className="h-[80px] md:px-20 pb-4 bg-inherit border border-t-gray-600 border-b-0 border-opacity-35">
                     <div className="mt-6 max-sm:py-4 flex max-md:flex-col items-center justify-between max-md:gap-10 text-lg max-sm:tet-xs text-black text-ellipsis font-palanquin px-14 lg:px-10">
                         <div>
                             <p className="max-sm:text-sm"> @ 2024 Arada dictionary Inc. All rights reserved </p>

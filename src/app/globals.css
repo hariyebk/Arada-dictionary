@@ -80,7 +80,7 @@
     @apply md:text-xl max-sm:text-base sm:text-lg text-black leading-6 font-palanquin
   }
   .aboutP {
-    @apply max-sm:text-base sm:text-lg text-black max-sm:break-all md:text-justify font-palanquin leading-9
+    @apply max-sm:text-sm sm:text-base text-black font-palanquin
   }
   .aboutT {
     @apply mt-7 text-2xl max-md:text-xl text-main font-palanquin font-bold
