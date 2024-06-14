@@ -1,4 +1,4 @@
-**Arada Dictionary: Your Guide to Local Slang and Informal Talk**
+### Arada Dictionary: Your Guide to Local Slang and Informal Talk
 =================================================================
 
 **Never feel lost in conversations again!**
