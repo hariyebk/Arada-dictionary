@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+**Arada Dictionary: Your Guide to Amharic Slang and Informal Talk**
+=================================================================
 
-## Getting Started
+**Never feel lost in conversations again!**
 
-First, run the development server:
+Have you ever felt confused or left out of conversations because of unfamiliar slang words and phrases? You're not alone! That's why I created Arada Dictionary, a community-driven platform to help you understand and navigate Amharic slang language.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Imagine This...**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You're traveling to Dire Dawa or Addis Ababa, and suddenly, people are using words and phrases you've never heard before. With Arada Dictionary, you can quickly look up unfamiliar terms and get a better understanding of the local culture and language.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**Get Involved!**
 
-## Learn More
+Arada Dictionary is a community-driven project, and we need your help to make it a success! Whether you're a slang language expert, or simply someone who's passionate about the modern Amharic language, we invite you to contribute to our dictionary.
 
-To learn more about Next.js, take a look at the following resources:
+**How to Contribute**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Sign in with your Google or GitHub account
+* head over /define route and fill the form to describe the slang word
